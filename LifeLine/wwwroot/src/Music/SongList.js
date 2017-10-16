@@ -31,6 +31,9 @@ class SongList extends Component {
     componentWillReceiveProps(props) {
         let sheet = props.sheet;
         let sheetPage = this.state.sheetPage;
+        if (sheet ===undefined){
+            return;
+        }
         if (!sheetPage || sheet.id !== sheetPage.id) {
             this.sheetName = sheet.name;
             this.initFetchPage(sheet.id, 1);
@@ -66,14 +69,12 @@ class SongList extends Component {
                 <thead>
                 <tr>
                     <th>标题</th>
-                    <th>路径</th>
                 </tr>
                 </thead>
                 <tbody>
                 {this.state.sheetPage.songs.map(t => {
                     return <tr key={t.id}>
                         <td>{t.title}</td>
-                        <td>{t.path}</td>
                         <td>
                             <button className={"btn btn-light"} onClick={() => this.playSong(t)}>
                                 <i className="fa fa-play fa-fw"></i></button>

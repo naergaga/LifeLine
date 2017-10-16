@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(23);
+var bind = __webpack_require__(24);
 var isBuffer = __webpack_require__(49);
 
 /*global toString:true*/
@@ -670,10 +670,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(24);
+    adapter = __webpack_require__(25);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(24);
+    adapter = __webpack_require__(25);
   }
   return adapter;
 }
@@ -818,7 +818,7 @@ module.exports = $export;
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(29)(function () {
+module.exports = !__webpack_require__(30)(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -844,7 +844,7 @@ module.exports = (__webpack_require__(9))(17);
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(8);
-var createDesc = __webpack_require__(30);
+var createDesc = __webpack_require__(31);
 module.exports = __webpack_require__(12) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -857,7 +857,7 @@ module.exports = __webpack_require__(12) ? function (object, key, value) {
 /* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(29);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -1103,6 +1103,54 @@ module.exports = exports['default'];
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.AxiosForm = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _axios = __webpack_require__(6);
+
+var axios = _interopRequireWildcard(_axios);
+
+var _querystring = __webpack_require__(66);
+
+var qs = _interopRequireWildcard(_querystring);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AxiosForm = exports.AxiosForm = function () {
+    function AxiosForm() {
+        _classCallCheck(this, AxiosForm);
+    }
+
+    _createClass(AxiosForm, null, [{
+        key: 'GetIns',
+        value: function GetIns() {
+            return axios.create({
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                transformRequest: [function (data) {
+                    // 这里可以在发送请求之前对请求数据做处理，比如form-data格式化等，这里可以使用开头引入的Qs（这个模块在安装axios的时候就已经安装了，不需要另外安装）
+                    var info = qs.encode(data);
+                    return info;
+                }]
+            });
+        }
+    }]);
+
+    return AxiosForm;
+}();
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 module.exports = function bind(fn, thisArg) {
   return function wrap() {
     var args = new Array(arguments.length);
@@ -1115,7 +1163,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1126,7 +1174,7 @@ var settle = __webpack_require__(52);
 var buildURL = __webpack_require__(54);
 var parseHeaders = __webpack_require__(55);
 var isURLSameOrigin = __webpack_require__(56);
-var createError = __webpack_require__(25);
+var createError = __webpack_require__(26);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(57);
 
 module.exports = function xhrAdapter(config) {
@@ -1303,7 +1351,7 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1328,7 +1376,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1340,7 +1388,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1366,7 +1414,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -1375,7 +1423,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -1388,7 +1436,7 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -1402,59 +1450,11 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, exports) {
 
 module.exports = {};
 
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.AxiosForm = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _axios = __webpack_require__(6);
-
-var axios = _interopRequireWildcard(_axios);
-
-var _querystring = __webpack_require__(66);
-
-var qs = _interopRequireWildcard(_querystring);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var AxiosForm = exports.AxiosForm = function () {
-    function AxiosForm() {
-        _classCallCheck(this, AxiosForm);
-    }
-
-    _createClass(AxiosForm, null, [{
-        key: 'GetIns',
-        value: function GetIns() {
-            return axios.create({
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                transformRequest: [function (data) {
-                    // 这里可以在发送请求之前对请求数据做处理，比如form-data格式化等，这里可以使用开头引入的Qs（这个模块在安装axios的时候就已经安装了，不需要另外安装）
-                    var info = qs.encode(data);
-                    return info;
-                }]
-            });
-        }
-    }]);
-
-    return AxiosForm;
-}();
 
 /***/ }),
 /* 33 */
@@ -2437,7 +2437,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(23);
+var bind = __webpack_require__(24);
 var Axios = __webpack_require__(50);
 var defaults = __webpack_require__(10);
 
@@ -2472,9 +2472,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(27);
+axios.Cancel = __webpack_require__(28);
 axios.CancelToken = __webpack_require__(64);
-axios.isCancel = __webpack_require__(26);
+axios.isCancel = __webpack_require__(27);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -2634,7 +2634,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(25);
+var createError = __webpack_require__(26);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -3053,7 +3053,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(61);
-var isCancel = __webpack_require__(26);
+var isCancel = __webpack_require__(27);
 var defaults = __webpack_require__(10);
 
 /**
@@ -3206,7 +3206,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(27);
+var Cancel = __webpack_require__(28);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -3551,7 +3551,7 @@ module.exports = function (fn, that, length) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(29);
 // instead of the ES6 spec version, we didn't implement @@toPrimitive case
 // and the second argument - flag - preferred type is a string
 module.exports = function (it, S) {
@@ -4434,7 +4434,7 @@ var _initialiseProps = function _initialiseProps() {
 /* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = !__webpack_require__(12) && !__webpack_require__(29)(function () {
+module.exports = !__webpack_require__(12) && !__webpack_require__(30)(function () {
   return Object.defineProperty(__webpack_require__(89)('div'), 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -4443,7 +4443,7 @@ module.exports = !__webpack_require__(12) && !__webpack_require__(29)(function (
 /* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(29);
 var document = __webpack_require__(7).document;
 // typeof document.createElement is 'object' in old IE
 var is = isObject(document) && isObject(document.createElement);
@@ -4540,7 +4540,7 @@ var $export = __webpack_require__(11);
 var redefine = __webpack_require__(96);
 var hide = __webpack_require__(15);
 var has = __webpack_require__(13);
-var Iterators = __webpack_require__(31);
+var Iterators = __webpack_require__(32);
 var $iterCreate = __webpack_require__(124);
 var setToStringTag = __webpack_require__(83);
 var getPrototypeOf = __webpack_require__(127);
@@ -4631,7 +4631,7 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var pIE = __webpack_require__(35);
-var createDesc = __webpack_require__(30);
+var createDesc = __webpack_require__(31);
 var toIObject = __webpack_require__(17);
 var toPrimitive = __webpack_require__(71);
 var has = __webpack_require__(13);
@@ -4912,7 +4912,7 @@ var _ToolBar = __webpack_require__(172);
 
 var _ToolBar2 = _interopRequireDefault(_ToolBar);
 
-var _AxiosInstance = __webpack_require__(32);
+var _AxiosInstance = __webpack_require__(23);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -5241,7 +5241,7 @@ var IObject = __webpack_require__(91);
 var $assign = Object.assign;
 
 // should work with symbols and should have deterministic property order (V8 bug)
-module.exports = !$assign || __webpack_require__(29)(function () {
+module.exports = !$assign || __webpack_require__(30)(function () {
   var A = {};
   var B = {};
   // eslint-disable-next-line no-undef
@@ -5374,7 +5374,7 @@ module.exports = function (TO_STRING) {
 "use strict";
 
 var create = __webpack_require__(82);
-var descriptor = __webpack_require__(30);
+var descriptor = __webpack_require__(31);
 var setToStringTag = __webpack_require__(83);
 var IteratorPrototype = {};
 
@@ -5440,7 +5440,7 @@ module.exports = Object.getPrototypeOf || function (O) {
 __webpack_require__(129);
 var global = __webpack_require__(7);
 var hide = __webpack_require__(15);
-var Iterators = __webpack_require__(31);
+var Iterators = __webpack_require__(32);
 var TO_STRING_TAG = __webpack_require__(3)('toStringTag');
 
 var DOMIterables = ('CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,' +
@@ -5466,7 +5466,7 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 var addToUnscopables = __webpack_require__(130);
 var step = __webpack_require__(131);
-var Iterators = __webpack_require__(31);
+var Iterators = __webpack_require__(32);
 var toIObject = __webpack_require__(17);
 
 // 22.1.3.4 Array.prototype.entries()
@@ -5545,7 +5545,7 @@ var DESCRIPTORS = __webpack_require__(12);
 var $export = __webpack_require__(11);
 var redefine = __webpack_require__(96);
 var META = __webpack_require__(135).KEY;
-var $fails = __webpack_require__(29);
+var $fails = __webpack_require__(30);
 var shared = __webpack_require__(76);
 var setToStringTag = __webpack_require__(83);
 var uid = __webpack_require__(34);
@@ -5557,7 +5557,7 @@ var isArray = __webpack_require__(137);
 var anObject = __webpack_require__(16);
 var toIObject = __webpack_require__(17);
 var toPrimitive = __webpack_require__(71);
-var createDesc = __webpack_require__(30);
+var createDesc = __webpack_require__(31);
 var _create = __webpack_require__(82);
 var gOPNExt = __webpack_require__(138);
 var $GOPD = __webpack_require__(98);
@@ -5778,14 +5778,14 @@ setToStringTag(global.JSON, 'JSON', true);
 /***/ (function(module, exports, __webpack_require__) {
 
 var META = __webpack_require__(34)('meta');
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(29);
 var has = __webpack_require__(13);
 var setDesc = __webpack_require__(8).f;
 var id = 0;
 var isExtensible = Object.isExtensible || function () {
   return true;
 };
-var FREEZE = !__webpack_require__(29)(function () {
+var FREEZE = !__webpack_require__(30)(function () {
   return isExtensible(Object.preventExtensions({}));
 });
 var setMeta = function (it) {
@@ -6018,7 +6018,7 @@ module.exports = function (iterator, fn, value, entries) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
-var Iterators = __webpack_require__(31);
+var Iterators = __webpack_require__(32);
 var ITERATOR = __webpack_require__(3)('iterator');
 var ArrayProto = Array.prototype;
 
@@ -6034,7 +6034,7 @@ module.exports = function (it) {
 "use strict";
 
 var $defineProperty = __webpack_require__(8);
-var createDesc = __webpack_require__(30);
+var createDesc = __webpack_require__(31);
 
 module.exports = function (object, index, value) {
   if (index in object) $defineProperty.f(object, index, createDesc(0, value));
@@ -6048,7 +6048,7 @@ module.exports = function (object, index, value) {
 
 var classof = __webpack_require__(150);
 var ITERATOR = __webpack_require__(3)('iterator');
-var Iterators = __webpack_require__(31);
+var Iterators = __webpack_require__(32);
 module.exports = __webpack_require__(5).getIteratorMethod = function (it) {
   if (it != undefined) return it[ITERATOR]
     || it['@@iterator']
@@ -6142,7 +6142,7 @@ $export($export.S, 'Object', { setPrototypeOf: __webpack_require__(155).set });
 
 // Works with __proto__ only. Old v8 can't work with null proto objects.
 /* eslint-disable no-proto */
-var isObject = __webpack_require__(28);
+var isObject = __webpack_require__(29);
 var anObject = __webpack_require__(16);
 var check = function (O, proto) {
   anObject(O);
@@ -8201,7 +8201,7 @@ var _reactModal = __webpack_require__(40);
 
 var _reactModal2 = _interopRequireDefault(_reactModal);
 
-var _AxiosInstance = __webpack_require__(32);
+var _AxiosInstance = __webpack_require__(23);
 
 __webpack_require__(47);
 

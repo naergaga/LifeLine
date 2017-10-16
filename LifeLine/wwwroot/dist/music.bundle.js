@@ -70,7 +70,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(23);
+var bind = __webpack_require__(24);
 var isBuffer = __webpack_require__(49);
 
 /*global toString:true*/
@@ -615,10 +615,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(24);
+    adapter = __webpack_require__(25);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(24);
+    adapter = __webpack_require__(25);
   }
   return adapter;
 }
@@ -904,6 +904,54 @@ module.exports = exports['default'];
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.AxiosForm = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _axios = __webpack_require__(6);
+
+var axios = _interopRequireWildcard(_axios);
+
+var _querystring = __webpack_require__(66);
+
+var qs = _interopRequireWildcard(_querystring);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var AxiosForm = exports.AxiosForm = function () {
+    function AxiosForm() {
+        _classCallCheck(this, AxiosForm);
+    }
+
+    _createClass(AxiosForm, null, [{
+        key: 'GetIns',
+        value: function GetIns() {
+            return axios.create({
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                transformRequest: [function (data) {
+                    // 这里可以在发送请求之前对请求数据做处理，比如form-data格式化等，这里可以使用开头引入的Qs（这个模块在安装axios的时候就已经安装了，不需要另外安装）
+                    var info = qs.encode(data);
+                    return info;
+                }]
+            });
+        }
+    }]);
+
+    return AxiosForm;
+}();
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 module.exports = function bind(fn, thisArg) {
   return function wrap() {
     var args = new Array(arguments.length);
@@ -916,7 +964,7 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -927,7 +975,7 @@ var settle = __webpack_require__(52);
 var buildURL = __webpack_require__(54);
 var parseHeaders = __webpack_require__(55);
 var isURLSameOrigin = __webpack_require__(56);
-var createError = __webpack_require__(25);
+var createError = __webpack_require__(26);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(57);
 
 module.exports = function xhrAdapter(config) {
@@ -1104,7 +1152,7 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1129,7 +1177,7 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1141,7 +1189,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1167,58 +1215,10 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 28 */,
 /* 29 */,
 /* 30 */,
 /* 31 */,
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.AxiosForm = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _axios = __webpack_require__(6);
-
-var axios = _interopRequireWildcard(_axios);
-
-var _querystring = __webpack_require__(66);
-
-var qs = _interopRequireWildcard(_querystring);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var AxiosForm = exports.AxiosForm = function () {
-    function AxiosForm() {
-        _classCallCheck(this, AxiosForm);
-    }
-
-    _createClass(AxiosForm, null, [{
-        key: 'GetIns',
-        value: function GetIns() {
-            return axios.create({
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                transformRequest: [function (data) {
-                    // 这里可以在发送请求之前对请求数据做处理，比如form-data格式化等，这里可以使用开头引入的Qs（这个模块在安装axios的时候就已经安装了，不需要另外安装）
-                    var info = qs.encode(data);
-                    return info;
-                }]
-            });
-        }
-    }]);
-
-    return AxiosForm;
-}();
-
-/***/ }),
+/* 32 */,
 /* 33 */,
 /* 34 */,
 /* 35 */,
@@ -2065,7 +2065,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(23);
+var bind = __webpack_require__(24);
 var Axios = __webpack_require__(50);
 var defaults = __webpack_require__(10);
 
@@ -2100,9 +2100,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(27);
+axios.Cancel = __webpack_require__(28);
 axios.CancelToken = __webpack_require__(64);
-axios.isCancel = __webpack_require__(26);
+axios.isCancel = __webpack_require__(27);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -2262,7 +2262,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 "use strict";
 
 
-var createError = __webpack_require__(25);
+var createError = __webpack_require__(26);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -2681,7 +2681,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(61);
-var isCancel = __webpack_require__(26);
+var isCancel = __webpack_require__(27);
 var defaults = __webpack_require__(10);
 
 /**
@@ -2834,7 +2834,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 "use strict";
 
 
-var Cancel = __webpack_require__(27);
+var Cancel = __webpack_require__(28);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -3484,7 +3484,7 @@ var _UploadPreview = __webpack_require__(106);
 
 var _UploadPreview2 = _interopRequireDefault(_UploadPreview);
 
-var _AxiosInstance = __webpack_require__(32);
+var _AxiosInstance = __webpack_require__(23);
 
 var _axios = __webpack_require__(6);
 
@@ -3535,6 +3535,9 @@ var SongList = function (_Component) {
         value: function componentWillReceiveProps(props) {
             var sheet = props.sheet;
             var sheetPage = this.state.sheetPage;
+            if (sheet === undefined) {
+                return;
+            }
             if (!sheetPage || sheet.id !== sheetPage.id) {
                 this.sheetName = sheet.name;
                 this.initFetchPage(sheet.id, 1);
@@ -3598,11 +3601,6 @@ var SongList = function (_Component) {
                                 "th",
                                 null,
                                 "\u6807\u9898"
-                            ),
-                            _react2.default.createElement(
-                                "th",
-                                null,
-                                "\u8DEF\u5F84"
                             )
                         )
                     ),
@@ -3617,11 +3615,6 @@ var SongList = function (_Component) {
                                     "td",
                                     null,
                                     t.title
-                                ),
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
-                                    t.path
                                 ),
                                 _react2.default.createElement(
                                     "td",
@@ -3836,7 +3829,7 @@ var _axios = __webpack_require__(6);
 
 var axios = _interopRequireWildcard(_axios);
 
-var _AxiosInstance = __webpack_require__(32);
+var _AxiosInstance = __webpack_require__(23);
 
 var _ModalEnum = __webpack_require__(86);
 
