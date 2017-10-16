@@ -1,0 +1,33 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using LifeLine.Data
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="mt-md-auto mb-md-5">
+        <ul class="navbar-nav align-items-start">
+            <li class="nav-item">
+                <a class="nav-link" asp-page="/Account/Manage/Index" title="Manage"><i class="fa fa-fw fa-user"></i> @UserManager.GetUserName(User)</a>
+            </li>
+            <li class="nav-item">
+                <button type="submit" class="btn btn-link nav-link text-left"><i class="fa fa-fw fa-sign-out"></i>退出登录</button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="navbar-nav mt-md-auto mb-md-5">
+        <li class="nav-item">
+            <a asp-page="/Account/Register" class="nav-link">
+                <i class="fa fa-fw fa-compass"></i>注册
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Account/Login" class="nav-link">
+                <i class="fa fa-user-o fa-fw"></i>登录
+            </a>
+        </li>
+    </ul>
+}

@@ -1,0 +1,52 @@
+.main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1
+}
+
+.navbar{
+    background:url(/images/gc_1.jpg);
+}
+
+.main-nav i.fa{
+    margin-right:10px;
+}
+
+@media(max-width:767px) {
+    body {
+        padding-top: 55px;
+    }
+}
+
+@media(min-width:768px) {
+    #logoutForm {
+        width:100%;
+    }
+
+    .main-nav {
+        height: 100%;
+        width: calc(25% - 20px)
+    }
+
+    .navbar-expand-md {
+        height: 100%;
+        flex-direction: column;
+        align-items:flex-start;
+    }
+
+        .navbar-expand-md .navbar-nav {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .navbar-expand-md .navbar-collapse {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .navbar-expand-md .nav-item .nav-link {
+            width:100%;
+        }
+}

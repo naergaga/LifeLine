@@ -1,0 +1,38 @@
+{
+  "name": "lifeline",
+  "version": "1.0.0",
+  "description": "personal website using.net core 2 and react",
+  "main": "index.js",
+  "scripts": {
+    "dotnet-run": "dotnet run",
+    "dotnet-build": "dotnet build",
+    "watch": "webpack --watch",
+    "build": "webpack -p",
+    "build vendor": "webpack --config webpack.vendor.js -p"
+  },
+  "author": "naergaga",
+  "license": "ISC",
+  "devDependencies": {
+    "axios": "^0.16.2",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.0.0-beta",
+    "clean-webpack-plugin": "^0.1.17",
+    "css-loader": "^0.28.7",
+    "extract-text-webpack-plugin": "^3.0.0",
+    "file-loader": "^1.1.4",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.2.1",
+    "popper.js": "^1.11.0",
+    "rc-tree": "^1.7.7",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-modal": "^2.3.2",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.6.0",
+    "webpack-merge": "^4.1.0"
+  }
+}

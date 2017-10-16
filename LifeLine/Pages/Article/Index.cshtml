@@ -1,0 +1,13 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Article";
+    ViewData["UseVendorScript"] = true;
+}
+
+@section Scripts{
+    <script src="/dist/article.bundle.js" asp-append-version="true"></script>
+}
+@section Styles{
+    <link href="~/dist/bundle.css" rel="stylesheet"  asp-append-version="true" />
+}
