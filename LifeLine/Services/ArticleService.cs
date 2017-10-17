@@ -26,5 +26,17 @@ namespace LifeLine.Services
             _context.SaveChanges();
             return article;
         }
+
+        public Article Edit(int id, string title, string content, string userId)
+        {
+            Article article = _context.Article.SingleOrDefault(t=>t.Id==id && t.UserId==userId);
+            article.LastModifyTime  = DateTime.Now;
+            article.Content = content;
+            article.Title = title;
+
+            this._context.Update(article);
+            _context.SaveChanges();
+            return article;
+        }
     }
 }

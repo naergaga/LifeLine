@@ -11,6 +11,7 @@ export default class ToolBar extends Component {
 
         this.setLoad = this.setLoad.bind(this);
         this.setSelectInfo = this.setSelectInfo.bind(this);
+        this.onEditClick = this.onEditClick.bind(this);
     }
 
     render() {
@@ -29,10 +30,10 @@ export default class ToolBar extends Component {
                         disabled={isNull}
                 ><i className="fa fa-remove fa-fw"></i></button>
                 <button
-                    onClick={this.props.doEdit}
+                    onClick={this.onEditClick}
                     className="btn btn-light"
-                    disabled={!isCategory}
-                    title="修改类别"><i className="fa fa-edit fa-fw"></i></button>
+                    disabled={isNull}
+                    title={isNull?"":isArticle?"修改文章":"修改类别"}><i className="fa fa-edit fa-fw"></i></button>
                 <button
                     title="添加类别"
                     onClick={this.props.doAdd}
@@ -59,5 +60,14 @@ export default class ToolBar extends Component {
 
     setLoad(load) {
         this.setState({isLoad: load});
+    }
+
+    onEditClick(){
+        let info = this.state.selectInfo;
+        if (info.type==="C"){
+            this.props.doEdit();
+        }else {
+            window.open("/Article/Edit/"+info.id,"_blank");
+        }
     }
 }
