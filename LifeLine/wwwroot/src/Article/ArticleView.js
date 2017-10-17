@@ -18,7 +18,6 @@ export default class ArticleTree extends Component {
     }
 
     render() {
-        console.log(prism);
         let article = this.state.article;
         if (!article) {
             return <noscript />;

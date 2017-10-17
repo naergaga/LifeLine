@@ -10618,7 +10618,6 @@ var ArticleTree = function (_Component) {
     _createClass(ArticleTree, [{
         key: 'render',
         value: function render() {
-            console.log(prism);
             var article = this.state.article;
             if (!article) {
                 return _react2.default.createElement('noscript', null);
