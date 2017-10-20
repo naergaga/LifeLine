@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace LifeLine.Data.Migrations
+namespace LifeLine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170925085406_Song01")]
-    partial class Song01
+    [Migration("20171020120012_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -72,14 +72,73 @@ namespace LifeLine.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("LifeLine.Models.Article", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("CategoryId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<DateTime>("CreateTime");
+
+                    b.Property<DateTime>("LastModifyTime");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Article");
+                });
+
+            modelBuilder.Entity("LifeLine.Models.ArticleCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<int?>("ParentId");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ArticleCategory");
+                });
+
             modelBuilder.Entity("LifeLine.Models.Song", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Path");
+                    b.Property<string>("Composers");
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Path")
+                        .IsRequired();
+
+                    b.Property<string>("Performers");
+
+                    b.Property<string>("Title")
+                        .IsRequired();
+
+                    b.Property<string>("UploadFileName")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -91,9 +150,13 @@ namespace LifeLine.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.ToTable("SongCollection");
                 });
@@ -220,6 +283,31 @@ namespace LifeLine.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("LifeLine.Models.Article", b =>
+                {
+                    b.HasOne("LifeLine.Models.ArticleCategory", "Category")
+                        .WithMany("Articles")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("LifeLine.Data.ApplicationUser", "User")
+                        .WithMany("Articles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("LifeLine.Models.ArticleCategory", b =>
+                {
+                    b.HasOne("LifeLine.Models.ArticleCategory", "ParentCategory")
+                        .WithMany("SubCategories")
+                        .HasForeignKey("ParentId");
+
+                    b.HasOne("LifeLine.Data.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LifeLine.Models.SongCollectionMap", b =>

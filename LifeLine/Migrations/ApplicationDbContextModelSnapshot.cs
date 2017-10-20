@@ -8,13 +8,12 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 
-namespace LifeLine.Data.Migrations
+namespace LifeLine.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20171002094238_Article02")]
-    partial class Article02
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,6 +113,8 @@ namespace LifeLine.Data.Migrations
                         .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentId");
 
                     b.HasIndex("UserId");
 
@@ -286,17 +287,22 @@ namespace LifeLine.Data.Migrations
             modelBuilder.Entity("LifeLine.Models.Article", b =>
                 {
                     b.HasOne("LifeLine.Models.ArticleCategory", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .WithMany("Articles")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("LifeLine.Data.ApplicationUser", "User")
-                        .WithMany()
+                        .WithMany("Articles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("LifeLine.Models.ArticleCategory", b =>
                 {
+                    b.HasOne("LifeLine.Models.ArticleCategory", "ParentCategory")
+                        .WithMany("SubCategories")
+                        .HasForeignKey("ParentId");
+
                     b.HasOne("LifeLine.Data.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId")

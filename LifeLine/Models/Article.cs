@@ -26,9 +26,7 @@ namespace LifeLine.Models
         public DateTime CreateTime { get; set; }
         public DateTime LastModifyTime { get; set; }
         [Required]
-        [ForeignKey("User")]
         public string UserId { get; set; }
-        [ForeignKey("Category")]
         public int? CategoryId { get; set; }
 
         public ApplicationUser User { get; set; }

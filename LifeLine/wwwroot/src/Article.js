@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ArtcileTree from './Article/ArticleTree';
+import ArticleTree from './Article/ArticleTree';
 import ArticleView from './Article/ArticleView';
 import { AddDialog } from './Article/AddDialog';
 
@@ -15,7 +15,7 @@ class Article extends Component {
         return <div>
             <div className="row">
                 <div className="col-md-3">
-                    <ArtcileTree
+                    <ArticleTree
                         ref={item => this.tree=item}
                         openDialog={this.openDialog}
                         onSelectArticle={this.onSelectArticle}

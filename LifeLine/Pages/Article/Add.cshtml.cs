@@ -38,19 +38,20 @@ namespace LifeLine.Pages.Article
 
         public IActionResult OnPost(
             [FromServices]UserManager<ApplicationUser> userManager,
-            [FromServices]ArticleService service)
+            [FromServices]ArticleService service,
+            int? categoryId)
         {
             ViewData["Success"] = false;
             try
             {
                 var userId = userManager.GetUserId(User);
-                service.Add(Input.Title, Input.Content, Input.CategoryId,userId);
+                service.Add(Input.Title, Input.Content, categoryId, userId);
+                ViewData["Success"] = true;
             }
             catch (Exception ex)
             {
                 ModelState.AddModelError("error", "ºÏ≤È ‰»Î");
             }
-            ViewData["Success"] = true;
             return Page();
         }
     }

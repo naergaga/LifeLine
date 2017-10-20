@@ -46,7 +46,7 @@ namespace LifeLine.Controllers
         public IActionResult Post(
             [FromServices]UserManager<ApplicationUser> userManager, 
             [FromServices]ApplicationDbContext context, 
-            int parentId, string name)
+            int? parentId, string name)
         {
             var userId = userManager.GetUserId(User);
             var result = context.ArticleCategory.Add(new ArticleCategory
@@ -102,8 +102,7 @@ namespace LifeLine.Controllers
             var item = context.ArticleCategory.SingleOrDefault(t => t.Id == id);
             if (item.UserId == userManager.GetUserId(User))
             {
-                context.ArticleCategory.Remove(item);
-                context.SaveChanges();
+                context.DeleteArticleCategory(item);
                 return NoContent();
             } else
             {

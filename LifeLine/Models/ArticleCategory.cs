@@ -19,7 +19,7 @@ namespace LifeLine.Models
         public string UserId { get; set; }
 
         public ApplicationUser User { get; set; }
-        [ForeignKey("ParentId")]
+        public virtual ArticleCategory ParentCategory { get; set; }
         public virtual ICollection<ArticleCategory> SubCategories { get; set; }
         public virtual ICollection<Article> Articles { get; set; }
     }

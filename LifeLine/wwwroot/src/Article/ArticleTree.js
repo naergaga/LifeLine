@@ -90,6 +90,10 @@ export default class ArticleTree extends Component {
 
     addFolder() {
         let info = this.selectInfo;
+        if (info === undefined) {
+            this.props.openDialog("add");
+            return;
+        }
         this.props.openDialog("add",info.id,info.title);
     }
 
