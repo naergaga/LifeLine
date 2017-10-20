@@ -1,0 +1,11 @@
+﻿.article-time > div {
+    display: flex;
+    font-size:smaller;
+}
+
+    .article-time > div > span:nth-child(1) {
+        width:8rem;
+    }
+
+    .article-time > div > span:nth-child(2) {
+    }

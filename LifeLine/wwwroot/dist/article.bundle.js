@@ -6370,7 +6370,7 @@ var _ArticleView = __webpack_require__(269);
 
 var _ArticleView2 = _interopRequireDefault(_ArticleView);
 
-var _AddDialog = __webpack_require__(272);
+var _AddDialog = __webpack_require__(274);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10585,7 +10585,11 @@ var _prismjs = __webpack_require__(270);
 
 var prism = _interopRequireWildcard(_prismjs);
 
-__webpack_require__(274);
+var _DateUtil = __webpack_require__(272);
+
+__webpack_require__(273);
+
+__webpack_require__(276);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -10634,11 +10638,39 @@ var ArticleTree = function (_Component) {
                 _react2.default.createElement('div', { dangerouslySetInnerHTML: { __html: article.content } }),
                 _react2.default.createElement(
                     'div',
-                    null,
-                    '\u521B\u5EFA\u65F6\u95F4\uFF1A',
-                    article.createTime,
-                    '\u6700\u540E\u4FEE\u6539\u65F6\u95F4\uFF1A',
-                    article.lastModifyTime
+                    { className: 'd-flex mt-5' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'article-time ml-auto' },
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                '\u521B\u5EFA\u65F6\u95F4\uFF1A'
+                            ),
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                _DateUtil.DateUtil.getDateStr(article.createTime)
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                '\u6700\u540E\u4FEE\u6539\u65F6\u95F4\uFF1A'
+                            ),
+                            _react2.default.createElement(
+                                'span',
+                                null,
+                                _DateUtil.DateUtil.getDateStr(article.lastModifyTime)
+                            )
+                        )
+                    )
                 )
             );
         }
@@ -11507,6 +11539,43 @@ module.exports = (__webpack_require__(3))(13);
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var DateUtil = exports.DateUtil = function () {
+    function DateUtil() {
+        _classCallCheck(this, DateUtil);
+    }
+
+    _createClass(DateUtil, null, [{
+        key: "getDateStr",
+        value: function getDateStr(isoStr) {
+            var date = new Date(isoStr);
+            return "".concat(date.getFullYear(), ".", date.getMonth(), ".", date.getDate(), " ", date.getHours(), ":", date.getMinutes(), ":", date.getSeconds());
+        }
+    }]);
+
+    return DateUtil;
+}();
+
+/***/ }),
+/* 273 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 274 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 exports.AddDialog = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -11657,8 +11726,8 @@ var AddDialog = exports.AddDialog = function (_React$Component) {
 }(React.Component);
 
 /***/ }),
-/* 273 */,
-/* 274 */
+/* 275 */,
+/* 276 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
