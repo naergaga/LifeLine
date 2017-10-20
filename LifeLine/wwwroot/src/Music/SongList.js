@@ -1,7 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import UploadPreview from "./UploadPreview";
-import {AxiosForm} from "../Common/AxiosInstance";
+import { AxiosForm } from "../Common/AxiosInstance";
 import * as axios from "axios";
+import { Page } from "../Page";
 
 class SongList extends Component {
 
@@ -23,7 +24,7 @@ class SongList extends Component {
         }
 
         this.axiosIns = AxiosForm.GetIns();
-        this.state = {files: null, sheetPage: null};
+        this.state = { files: null, sheetPage: null };
 
         this.addSongs = this.addSongs.bind(this);
     }
@@ -31,7 +32,7 @@ class SongList extends Component {
     componentWillReceiveProps(props) {
         let sheet = props.sheet;
         let sheetPage = this.state.sheetPage;
-        if (sheet ===undefined){
+        if (sheet === undefined) {
             return;
         }
         if (!sheetPage || sheet.id !== sheetPage.id) {
@@ -46,45 +47,53 @@ class SongList extends Component {
     }
 
     render() {
-        if (!this.state.sheetPage) return <noscript/>;
+        if (!this.state.sheetPage) return <noscript />;
+
         return <div>
             <h5>当前歌单：{this.sheetName}</h5>
             <input type="file"
-                   ref={item => this._fileInput = item}
-                   accept="audio/*"
-                   onChange={this.handleFile}
-                   multiple
-                   style={{display: "none"}}/>
+                ref={item => this._fileInput = item}
+                accept="audio/*"
+                onChange={this.handleFile}
+                multiple
+                style={{ display: "none" }} />
             <div className="d-flex">
                 <audio
                     ref={item => this._audio = item}
                     src={"./songs/song01.mp3"} controls={true} loop={true}></audio>
                 <button title="上传歌曲"
-                        onClick={this.uploadClick}
-                        className="btn btn-outline-primary ml-auto mr-lg-5"><i className="fa fa-fw fa-plus"></i>
+                    onClick={this.uploadClick}
+                    className="btn btn-outline-primary ml-auto mr-lg-5"><i className="fa fa-fw fa-plus"></i>
                 </button>
             </div>
-            <UploadPreview files={this.state.files} addSongs={this.addSongs}/>
+            <UploadPreview files={this.state.files} addSongs={this.addSongs} />
             <table className="w-100">
                 <thead>
-                <tr>
-                    <th>标题</th>
-                </tr>
+                    <tr>
+                        <th>标题</th>
+                    </tr>
                 </thead>
                 <tbody>
-                {this.state.sheetPage.songs.map(t => {
-                    return <tr key={t.id}>
-                        <td>{t.title}</td>
-                        <td>
-                            <button className={"btn btn-light"} onClick={() => this.playSong(t)}>
-                                <i className="fa fa-play fa-fw"></i></button>
-                            <button className={"btn btn-light"} onClick={() => this.removeSong(t)}>
-                                <i className="fa fa-remove fa-fw"></i></button>
-                        </td>
-                    </tr>
-                })}
+                    {this.state.sheetPage.songs.map(t => {
+                        return <tr key={t.id}>
+                            <td>{t.title}</td>
+                            <td>
+                                <div className="btn-group">
+                                    <button className={"btn btn-light"} onClick={() => this.playSong(t)}>
+                                        <i className="fa fa-play fa-fw"></i></button>
+                                    <button className={"btn btn-light"} onClick={() => this.removeSong(t)}>
+                                        <i className="fa fa-remove fa-fw"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    })}
                 </tbody>
             </table>
+            <Page
+                total={this.state.sheetPage.totalPage}
+                current={this.state.sheetPage.currentPage}
+                onPageChange={(index) => { this.fetchPage(index); }}
+            />
         </div>
     }
 
@@ -95,7 +104,7 @@ class SongList extends Component {
 
     handleFile() {
         if (!this._fileInput) return;
-        this.setState({files: this._fileInput.files});
+        this.setState({ files: this._fileInput.files });
     }
 
 
@@ -121,7 +130,7 @@ class SongList extends Component {
         }).then(response => {
             if (response.data.success) {
                 console.log('上传成功');
-                this.setState({files: null});
+                this.setState({ files: null });
                 this.fetchPage(this.state.sheetPage.currentPage);
             }
         })
@@ -148,12 +157,12 @@ class SongList extends Component {
                     pageSize: 15
                 }
             }).then(response => {
-            if (response.data.currentPage) {
-                this.setState({sheetPage: response.data});
-            } else {
-                console.log("fetch page error ?_?");
-            }
-        });
+                if (response.data.currentPage) {
+                    this.setState({ sheetPage: response.data });
+                } else {
+                    console.log("fetch page error ?_?");
+                }
+            });
     }
 }
 

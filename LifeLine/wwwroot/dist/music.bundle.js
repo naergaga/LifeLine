@@ -63,8 +63,9 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 157);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -374,13 +375,1094 @@ module.exports = {
 
 
 /***/ }),
-/* 1 */
+
+/***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(3))(7);
 
 /***/ }),
-/* 2 */
+
+/***/ 10:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
+  };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(58)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(61)();
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+
+/***/ 11:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(3))(2);
+
+/***/ }),
+
+/***/ 118:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ModalEnum = exports.ModalEnum = function ModalEnum() {
+    _classCallCheck(this, ModalEnum);
+
+    this.add = new ModalInfo(1, "添加歌单", "添加");
+    this.edit = new ModalInfo(2, "修改歌单", "修改");
+};
+
+var ModalInfo = exports.ModalInfo = function ModalInfo(id, title, btnLeftText) {
+    var inputText = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
+
+    _classCallCheck(this, ModalInfo);
+
+    this.id = id;
+    this.title = title;
+    this.btnLeftText = btnLeftText;
+    this.inputText = inputText;
+};
+
+/***/ }),
+
+/***/ 12:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
+
+module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ 13:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+var utils = __webpack_require__(0);
+var normalizeHeaderName = __webpack_require__(71);
+
+var DEFAULT_CONTENT_TYPE = {
+  'Content-Type': 'application/x-www-form-urlencoded'
+};
+
+function setContentTypeIfUnset(headers, value) {
+  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
+    headers['Content-Type'] = value;
+  }
+}
+
+function getDefaultAdapter() {
+  var adapter;
+  if (typeof XMLHttpRequest !== 'undefined') {
+    // For browsers use XHR adapter
+    adapter = __webpack_require__(37);
+  } else if (typeof process !== 'undefined') {
+    // For node use HTTP adapter
+    adapter = __webpack_require__(37);
+  }
+  return adapter;
+}
+
+var defaults = {
+  adapter: getDefaultAdapter(),
+
+  transformRequest: [function transformRequest(data, headers) {
+    normalizeHeaderName(headers, 'Content-Type');
+    if (utils.isFormData(data) ||
+      utils.isArrayBuffer(data) ||
+      utils.isBuffer(data) ||
+      utils.isStream(data) ||
+      utils.isFile(data) ||
+      utils.isBlob(data)
+    ) {
+      return data;
+    }
+    if (utils.isArrayBufferView(data)) {
+      return data.buffer;
+    }
+    if (utils.isURLSearchParams(data)) {
+      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
+      return data.toString();
+    }
+    if (utils.isObject(data)) {
+      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
+      return JSON.stringify(data);
+    }
+    return data;
+  }],
+
+  transformResponse: [function transformResponse(data) {
+    /*eslint no-param-reassign:0*/
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) { /* Ignore */ }
+    }
+    return data;
+  }],
+
+  timeout: 0,
+
+  xsrfCookieName: 'XSRF-TOKEN',
+  xsrfHeaderName: 'X-XSRF-TOKEN',
+
+  maxContentLength: -1,
+
+  validateStatus: function validateStatus(status) {
+    return status >= 200 && status < 300;
+  }
+};
+
+defaults.headers = {
+  common: {
+    'Accept': 'application/json, text/plain, */*'
+  }
+};
+
+utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
+  defaults.headers[method] = {};
+});
+
+utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
+  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
+});
+
+module.exports = defaults;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
+
+/***/ }),
+
+/***/ 157:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _music = __webpack_require__(158);
+
+var _music2 = _interopRequireDefault(_music);
+
+var _reactDom = __webpack_require__(21);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_reactDom2.default.render(_react2.default.createElement(_music2.default, null), document.querySelector(".body-content"));
+
+/***/ }),
+
+/***/ 158:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AddSheetModal = __webpack_require__(159);
+
+var _SongList = __webpack_require__(160);
+
+var _SongList2 = _interopRequireDefault(_SongList);
+
+var _SheetList = __webpack_require__(162);
+
+var _SheetList2 = _interopRequireDefault(_SheetList);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Music = function (_Component) {
+    _inherits(Music, _Component);
+
+    function Music(props) {
+        _classCallCheck(this, Music);
+
+        var _this = _possibleConstructorReturn(this, (Music.__proto__ || Object.getPrototypeOf(Music)).call(this, props));
+
+        _this.state = {
+            currentSheet: null,
+            showModal: false
+        };
+
+        _this.handleCloseModal = _this.handleCloseModal.bind(_this);
+        _this.handleOpenModal = _this.handleOpenModal.bind(_this);
+        _this.selectSheetChange = _this.selectSheetChange.bind(_this);
+        return _this;
+    }
+
+    _createClass(Music, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { className: 'row' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-3' },
+                        _react2.default.createElement(_SheetList2.default, {
+                            ref: function ref(item) {
+                                return _this2.sheetList = item;
+                            },
+                            selectSheetChange: this.selectSheetChange,
+                            handleOpenModal: this.handleOpenModal,
+                            handleCloseModal: this.handleCloseModal
+                        })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'col-md-9' },
+                        _react2.default.createElement(_SongList2.default, {
+                            sheet: this.state.currentSheet
+                        })
+                    )
+                ),
+                _react2.default.createElement(_AddSheetModal.AddSheetModal, {
+                    ref: function ref(item) {
+                        return _this2.modal = item;
+                    },
+                    showModal: this.state.showModal,
+                    sheetList: this.sheetList,
+                    handleCloseModal: this.handleCloseModal })
+            );
+        }
+    }, {
+        key: 'selectSheetChange',
+        value: function selectSheetChange(sheet) {
+            this.setState({ currentSheet: sheet });
+        }
+    }, {
+        key: 'handleCloseModal',
+        value: function handleCloseModal() {
+            this.setState({ showModal: false });
+        }
+    }, {
+        key: 'handleOpenModal',
+        value: function handleOpenModal(modalInfo) {
+            this.modal.setModalInfo(modalInfo);
+            this.setState({ showModal: true });
+        }
+    }]);
+
+    return Music;
+}(_react.Component);
+
+exports.default = Music;
+
+/***/ }),
+
+/***/ 159:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.AddSheetModal = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactModal = __webpack_require__(56);
+
+var _reactModal2 = _interopRequireDefault(_reactModal);
+
+var _ModalEnum = __webpack_require__(118);
+
+__webpack_require__(67);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var AddSheetModal = exports.AddSheetModal = function (_Component) {
+    _inherits(AddSheetModal, _Component);
+
+    function AddSheetModal(props) {
+        _classCallCheck(this, AddSheetModal);
+
+        var _this = _possibleConstructorReturn(this, (AddSheetModal.__proto__ || Object.getPrototypeOf(AddSheetModal)).call(this, props));
+
+        _this.state = {
+            modalInfo: new _ModalEnum.ModalInfo(-1, "test", "test")
+        };
+
+        _this.addSheet = _this.addSheet.bind(_this);
+        _this.handleClick = _this.handleClick.bind(_this);
+        return _this;
+    }
+
+    _createClass(AddSheetModal, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var modalInfo = this.state.modalInfo;
+
+            return _react2.default.createElement(
+                _reactModal2.default,
+                {
+                    isOpen: this.props.showModal,
+                    className: 'Modal',
+                    overlayClassName: 'Overlay',
+                    contentLabel: modalInfo.title
+                },
+                _react2.default.createElement(
+                    'h1',
+                    null,
+                    modalInfo.title
+                ),
+                _react2.default.createElement('input', { className: 'form-control', defaultValue: modalInfo.inputText, ref: function ref(item) {
+                        return _this2._sheetInput = item;
+                    } }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'd-flex mt-3' },
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-info', onClick: this.handleClick },
+                        modalInfo.btnLeftText
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { className: 'btn btn-outline-info ml-auto', onClick: this.props.handleCloseModal },
+                        '\u5173\u95ED'
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'handleClick',
+        value: function handleClick() {
+            var info = this.state.modalInfo;
+            switch (info.id) {
+                case 1:
+                    this.addSheet();
+                    break;
+                case 2:
+                    this.editSheet();
+                    break;
+            }
+        }
+    }, {
+        key: 'addSheet',
+        value: function addSheet() {
+            if (this._sheetInput) {
+                var name = this._sheetInput.value;
+
+                if (name == null) {
+                    console.log("标题不为空");
+                    return;
+                }
+
+                this.props.sheetList.addSheet(name);
+            }
+        }
+    }, {
+        key: 'editSheet',
+        value: function editSheet() {
+            if (this._sheetInput) {
+                var name = this._sheetInput.value;
+
+                if (name == null) {
+                    console.log("标题不为空");
+                    return;
+                }
+
+                this.props.sheetList.editSheet(name, this.state.modalInfo.data);
+            }
+        }
+    }, {
+        key: 'setModalInfo',
+        value: function setModalInfo(modalInfo) {
+            this.setState({ modalInfo: modalInfo });
+        }
+    }]);
+
+    return AddSheetModal;
+}(_react.Component);
+
+/***/ }),
+
+/***/ 160:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _UploadPreview = __webpack_require__(161);
+
+var _UploadPreview2 = _interopRequireDefault(_UploadPreview);
+
+var _AxiosInstance = __webpack_require__(35);
+
+var _axios = __webpack_require__(6);
+
+var axios = _interopRequireWildcard(_axios);
+
+var _Page = __webpack_require__(277);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SongList = function (_Component) {
+    _inherits(SongList, _Component);
+
+    function SongList(props) {
+        _classCallCheck(this, SongList);
+
+        var _this = _possibleConstructorReturn(this, (SongList.__proto__ || Object.getPrototypeOf(SongList)).call(this, props));
+
+        _this.uploadClick = _this.uploadClick.bind(_this);
+        _this.handleFile = _this.handleFile.bind(_this);
+
+        _this.urls = {
+            songRemoveUrl: "/Music",
+            sheetSongsUrl: "/Sheet",
+            songAddUrl: "/Music/Add"
+
+        };
+        var sheet = _this.props.sheet;
+        if (sheet) {
+            _this.sheetName = sheet.name;
+            _this.initFetchPage(sheet.id, 1);
+        }
+
+        _this.axiosIns = _AxiosInstance.AxiosForm.GetIns();
+        _this.state = { files: null, sheetPage: null };
+
+        _this.addSongs = _this.addSongs.bind(_this);
+        return _this;
+    }
+
+    _createClass(SongList, [{
+        key: "componentWillReceiveProps",
+        value: function componentWillReceiveProps(props) {
+            var sheet = props.sheet;
+            var sheetPage = this.state.sheetPage;
+            if (sheet === undefined) {
+                return;
+            }
+            if (!sheetPage || sheet.id !== sheetPage.id) {
+                this.sheetName = sheet.name;
+                this.initFetchPage(sheet.id, 1);
+            }
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate() {
+            if (this._audio) this._audio.volume = 0.5;
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            if (!this.state.sheetPage) return _react2.default.createElement("noscript", null);
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "h5",
+                    null,
+                    "\u5F53\u524D\u6B4C\u5355\uFF1A",
+                    this.sheetName
+                ),
+                _react2.default.createElement("input", { type: "file",
+                    ref: function ref(item) {
+                        return _this2._fileInput = item;
+                    },
+                    accept: "audio/*",
+                    onChange: this.handleFile,
+                    multiple: true,
+                    style: { display: "none" } }),
+                _react2.default.createElement(
+                    "div",
+                    { className: "d-flex" },
+                    _react2.default.createElement("audio", {
+                        ref: function ref(item) {
+                            return _this2._audio = item;
+                        },
+                        src: "./songs/song01.mp3", controls: true, loop: true }),
+                    _react2.default.createElement(
+                        "button",
+                        { title: "\u4E0A\u4F20\u6B4C\u66F2",
+                            onClick: this.uploadClick,
+                            className: "btn btn-outline-primary ml-auto mr-lg-5" },
+                        _react2.default.createElement("i", { className: "fa fa-fw fa-plus" })
+                    )
+                ),
+                _react2.default.createElement(_UploadPreview2.default, { files: this.state.files, addSongs: this.addSongs }),
+                _react2.default.createElement(
+                    "table",
+                    { className: "w-100" },
+                    _react2.default.createElement(
+                        "thead",
+                        null,
+                        _react2.default.createElement(
+                            "tr",
+                            null,
+                            _react2.default.createElement(
+                                "th",
+                                null,
+                                "\u6807\u9898"
+                            )
+                        )
+                    ),
+                    _react2.default.createElement(
+                        "tbody",
+                        null,
+                        this.state.sheetPage.songs.map(function (t) {
+                            return _react2.default.createElement(
+                                "tr",
+                                { key: t.id },
+                                _react2.default.createElement(
+                                    "td",
+                                    null,
+                                    t.title
+                                ),
+                                _react2.default.createElement(
+                                    "td",
+                                    null,
+                                    _react2.default.createElement(
+                                        "div",
+                                        { className: "btn-group" },
+                                        _react2.default.createElement(
+                                            "button",
+                                            { className: "btn btn-light", onClick: function onClick() {
+                                                    return _this2.playSong(t);
+                                                } },
+                                            _react2.default.createElement("i", { className: "fa fa-play fa-fw" })
+                                        ),
+                                        _react2.default.createElement(
+                                            "button",
+                                            { className: "btn btn-light", onClick: function onClick() {
+                                                    return _this2.removeSong(t);
+                                                } },
+                                            _react2.default.createElement("i", { className: "fa fa-remove fa-fw" })
+                                        )
+                                    )
+                                )
+                            );
+                        })
+                    )
+                ),
+                _react2.default.createElement(_Page.Page, {
+                    total: this.state.sheetPage.totalPage,
+                    current: this.state.sheetPage.currentPage,
+                    onPageChange: function onPageChange(index) {
+                        _this2.fetchPage(index);
+                    }
+                })
+            );
+        }
+    }, {
+        key: "uploadClick",
+        value: function uploadClick() {
+            var input = this._fileInput;
+            if (input) input.click();
+        }
+    }, {
+        key: "handleFile",
+        value: function handleFile() {
+            if (!this._fileInput) return;
+            this.setState({ files: this._fileInput.files });
+        }
+    }, {
+        key: "playSong",
+        value: function playSong(song) {
+            if (this._audio) {
+                this._audio.src = song.path;
+                this._audio.play();
+            }
+        }
+    }, {
+        key: "addSongs",
+        value: function addSongs(files) {
+            var _this3 = this;
+
+            if (!files) return;
+            var sheetId = this.state.sheetPage.id;
+            var form1 = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                form1.append("songs", files[i]);
+            }
+            form1.append("sheetId", sheetId);
+            axios.post(this.urls.songAddUrl, form1, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then(function (response) {
+                if (response.data.success) {
+                    console.log('上传成功');
+                    _this3.setState({ files: null });
+                    _this3.fetchPage(_this3.state.sheetPage.currentPage);
+                }
+            });
+        }
+    }, {
+        key: "removeSong",
+        value: function removeSong(song) {
+            var _this4 = this;
+
+            axios.delete(this.urls.songRemoveUrl + "/" + song.id).then(function (response) {
+                console.log('删除成功');
+                _this4.fetchPage(_this4.state.sheetPage.currentPage);
+            });
+        }
+    }, {
+        key: "fetchPage",
+        value: function fetchPage(page) {
+            var sheetId = this.state.sheetPage.id;
+            this.initFetchPage(sheetId, page);
+        }
+    }, {
+        key: "initFetchPage",
+        value: function initFetchPage(sheetId, page) {
+            var _this5 = this;
+
+            this.axiosIns.get(this.urls.sheetSongsUrl, {
+                params: {
+                    id: sheetId,
+                    currentPage: page,
+                    pageSize: 15
+                }
+            }).then(function (response) {
+                if (response.data.currentPage) {
+                    _this5.setState({ sheetPage: response.data });
+                } else {
+                    console.log("fetch page error ?_?");
+                }
+            });
+        }
+    }]);
+
+    return SongList;
+}(_react.Component);
+
+exports.default = SongList;
+
+/***/ }),
+
+/***/ 161:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var UploadPreview = function (_Component) {
+    _inherits(UploadPreview, _Component);
+
+    function UploadPreview(props) {
+        _classCallCheck(this, UploadPreview);
+
+        return _possibleConstructorReturn(this, (UploadPreview.__proto__ || Object.getPrototypeOf(UploadPreview)).call(this, props));
+    }
+
+    _createClass(UploadPreview, [{
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            var files = this.props.files;
+            if (!files) {
+                return _react2.default.createElement("noscript", null);
+            }
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "ul",
+                    null,
+                    Array.prototype.map.call(files, function (file, index) {
+                        return _react2.default.createElement(
+                            "li",
+                            { key: index },
+                            file.name,
+                            ",",
+                            file.size
+                        );
+                    })
+                ),
+                _react2.default.createElement(
+                    "div",
+                    { className: "d-flex" },
+                    _react2.default.createElement(
+                        "button",
+                        {
+                            onClick: function onClick() {
+                                return _this2.props.addSongs(files);
+                            },
+                            className: "ml-auto mr-lg-5 btn btn-secondary" },
+                        "\u4E0A\u4F20"
+                    )
+                )
+            );
+        }
+    }]);
+
+    return UploadPreview;
+}(_react.Component);
+
+exports.default = UploadPreview;
+
+/***/ }),
+
+/***/ 162:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _axios = __webpack_require__(6);
+
+var axios = _interopRequireWildcard(_axios);
+
+var _AxiosInstance = __webpack_require__(35);
+
+var _ModalEnum = __webpack_require__(118);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SheetList = function (_Component) {
+    _inherits(SheetList, _Component);
+
+    function SheetList(props) {
+        _classCallCheck(this, SheetList);
+
+        var _this = _possibleConstructorReturn(this, (SheetList.__proto__ || Object.getPrototypeOf(SheetList)).call(this, props));
+
+        _this.urls = {
+            removeUrl: "/Sheet",
+            getListUrl: "/Music/Sheets",
+            addUrl: "/Sheet",
+            editUrl: "/Sheet"
+        };
+        _this.axiosIns = _AxiosInstance.AxiosForm.GetIns();
+        _this.modalEnum = new _ModalEnum.ModalEnum();
+
+        _this.state = {
+            sheets: []
+        };
+
+        _this.fetchSheets();
+        return _this;
+    }
+
+    _createClass(SheetList, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var sheets = this.state.sheets;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'table',
+                    { className: 'w-100' },
+                    _react2.default.createElement(
+                        'tbody',
+                        null,
+                        sheets.map(function (item) {
+                            return _react2.default.createElement(
+                                'tr',
+                                { key: item.id },
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'button',
+                                        { className: 'btn btn-link',
+                                            onClick: function onClick() {
+                                                return _this2.setSheet(item.id);
+                                            } },
+                                        item.name
+                                    )
+                                ),
+                                _react2.default.createElement(
+                                    'td',
+                                    null,
+                                    _react2.default.createElement(
+                                        'button',
+                                        {
+                                            onClick: function onClick() {
+                                                _this2.removeSheet(item);
+                                            },
+                                            className: 'btn btn-outline-secondary border-0' },
+                                        _react2.default.createElement('i', { className: 'fa fa-remove fa-fw' })
+                                    ),
+                                    _react2.default.createElement(
+                                        'button',
+                                        {
+                                            onClick: function onClick() {
+                                                return _this2.handleOpenModal(item);
+                                            },
+                                            className: 'btn btn-outline-secondary border-0' },
+                                        _react2.default.createElement('i', { className: 'fa fa-edit fa-fw' })
+                                    )
+                                )
+                            );
+                        })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'd-flex' },
+                    _react2.default.createElement(
+                        'button',
+                        { title: '\u4E0A\u4E00\u9875', className: 'btn btn-light' },
+                        _react2.default.createElement('i', { className: 'fa fa-arrow-left fa-fw' })
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { title: '\u4E0B\u4E00\u9875', className: 'btn btn-light' },
+                        _react2.default.createElement('i', { className: 'fa fa-arrow-right fa-fw' })
+                    ),
+                    _react2.default.createElement(
+                        'button',
+                        { onClick: function onClick() {
+                                return _this2.props.handleOpenModal(_this2.modalEnum.add);
+                            }, title: '\u6DFB\u52A0\u6B4C\u5355',
+                            className: 'btn btn-outline-primary ml-auto mr-lg-5' },
+                        _react2.default.createElement('i', { className: 'fa fa-plus fa-fw' })
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'removeSheet',
+        value: function removeSheet(sheet) {
+            var _this3 = this;
+
+            console.log("remove sheet Click");
+            axios.delete(this.urls.removeUrl + "/" + sheet.id).then(function (response) {
+                _this3.fetchSheets();
+            });
+        }
+    }, {
+        key: 'fetchSheets',
+        value: function fetchSheets() {
+            var _this4 = this;
+
+            this.axiosIns.post(this.urls.getListUrl).then(function (response) {
+                if (response.data instanceof Array) {
+                    _this4.setState({ sheets: response.data });
+                    _this4.props.selectSheetChange(_this4.state.sheets[0]);
+                }
+            });
+        }
+    }, {
+        key: 'setSheet',
+        value: function setSheet(id) {
+            var item = this.state.sheets.find(function (item) {
+                return item.id == id;
+            });
+            this.props.selectSheetChange(item);
+        }
+    }, {
+        key: 'addSheet',
+        value: function addSheet(name) {
+            var _this5 = this;
+
+            var sheets = this.state.sheets;
+            for (var i = 0; i < sheets.length; i++) {
+                if (sheets[i].title == name) {
+                    console.log("标题重复了");
+                    return;
+                }
+            }
+            this.axiosIns.post(this.urls.addUrl, { name: name }).then(function (response) {
+                if (!response.data.id) {
+                    console.log("添加sheet出错");
+                }
+                sheets.push(response.data);
+                _this5.setState({ sheets: sheets });
+                _this5.props.handleCloseModal();
+            }).catch(function (error) {
+                console.log("添加sheet出错");
+            });
+        }
+    }, {
+        key: 'editSheet',
+        value: function editSheet(name, sheet) {
+            var _this6 = this;
+
+            var index = 0;
+            var sheets = this.state.sheets;
+            for (var i = 0; i < sheets.length; i++) {
+                if (sheets[i].title == name) {
+                    console.log("标题重复了");
+                    return;
+                }
+                if (sheets[i].id == sheet.id) {
+                    index = i;
+                }
+            }
+
+            this.axiosIns.put(this.urls.editUrl + "/" + sheet.id, { name: name }).then(function (response) {
+                if (!response.data.id) {
+                    return;
+                }
+                sheets[index] = response.data;
+                _this6.setState({ sheets: sheets });
+                _this6.props.handleCloseModal();
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
+    }, {
+        key: 'handleOpenModal',
+        value: function handleOpenModal(item) {
+            this.modalEnum.edit.inputText = item.name;
+            this.modalEnum.edit.data = item;
+            this.props.handleOpenModal(this.modalEnum.edit);
+        }
+    }]);
+
+    return SheetList;
+}(_react.Component);
+
+exports.default = SheetList;
+
+/***/ }),
+
+/***/ 2:
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -570,216 +1652,197 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports) {
 
-module.exports = vendor_66051959b5dc94687d1b;
-
-/***/ }),
-/* 4 */,
-/* 5 */,
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(68);
-
-/***/ }),
-/* 7 */,
-/* 8 */,
-/* 9 */,
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(58)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(61)();
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(3))(2);
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-
-module.exports = ReactPropTypesSecret;
-
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-var utils = __webpack_require__(0);
-var normalizeHeaderName = __webpack_require__(71);
-
-var DEFAULT_CONTENT_TYPE = {
-  'Content-Type': 'application/x-www-form-urlencoded'
-};
-
-function setContentTypeIfUnset(headers, value) {
-  if (!utils.isUndefined(headers) && utils.isUndefined(headers['Content-Type'])) {
-    headers['Content-Type'] = value;
-  }
-}
-
-function getDefaultAdapter() {
-  var adapter;
-  if (typeof XMLHttpRequest !== 'undefined') {
-    // For browsers use XHR adapter
-    adapter = __webpack_require__(37);
-  } else if (typeof process !== 'undefined') {
-    // For node use HTTP adapter
-    adapter = __webpack_require__(37);
-  }
-  return adapter;
-}
-
-var defaults = {
-  adapter: getDefaultAdapter(),
-
-  transformRequest: [function transformRequest(data, headers) {
-    normalizeHeaderName(headers, 'Content-Type');
-    if (utils.isFormData(data) ||
-      utils.isArrayBuffer(data) ||
-      utils.isBuffer(data) ||
-      utils.isStream(data) ||
-      utils.isFile(data) ||
-      utils.isBlob(data)
-    ) {
-      return data;
-    }
-    if (utils.isArrayBufferView(data)) {
-      return data.buffer;
-    }
-    if (utils.isURLSearchParams(data)) {
-      setContentTypeIfUnset(headers, 'application/x-www-form-urlencoded;charset=utf-8');
-      return data.toString();
-    }
-    if (utils.isObject(data)) {
-      setContentTypeIfUnset(headers, 'application/json;charset=utf-8');
-      return JSON.stringify(data);
-    }
-    return data;
-  }],
-
-  transformResponse: [function transformResponse(data) {
-    /*eslint no-param-reassign:0*/
-    if (typeof data === 'string') {
-      try {
-        data = JSON.parse(data);
-      } catch (e) { /* Ignore */ }
-    }
-    return data;
-  }],
-
-  timeout: 0,
-
-  xsrfCookieName: 'XSRF-TOKEN',
-  xsrfHeaderName: 'X-XSRF-TOKEN',
-
-  maxContentLength: -1,
-
-  validateStatus: function validateStatus(status) {
-    return status >= 200 && status < 300;
-  }
-};
-
-defaults.headers = {
-  common: {
-    'Accept': 'application/json, text/plain, */*'
-  }
-};
-
-utils.forEach(['delete', 'get', 'head'], function forEachMethodNoData(method) {
-  defaults.headers[method] = {};
-});
-
-utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
-  defaults.headers[method] = utils.merge(DEFAULT_CONTENT_TYPE);
-});
-
-module.exports = defaults;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
-
-/***/ }),
-/* 14 */,
-/* 15 */,
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */,
-/* 20 */,
-/* 21 */
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(3))(17);
 
 /***/ }),
-/* 22 */,
-/* 23 */,
-/* 24 */,
-/* 25 */,
-/* 26 */,
-/* 27 */,
-/* 28 */,
-/* 29 */
+
+/***/ 277:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Page = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+//interface PageState {
+//    showCount: number,
+//    totalPage: number,
+//    currentPage: number,
+//    startPage: number,
+//}
+
+//interface PageProps {
+//    total: number,
+//    current: number,
+//    onPageChange: Function
+//}
+
+var Page = exports.Page = function (_Component) {
+    _inherits(Page, _Component);
+
+    function Page(props) {
+        _classCallCheck(this, Page);
+
+        var _this = _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
+
+        _this.state = {
+            showCount: 10,
+            totalPage: props.total,
+            currentPage: props.current,
+            startPage: 1
+        };
+        return _this;
+    }
+
+    _createClass(Page, [{
+        key: "render",
+        value: function render() {
+            var arr = [];
+            var startPage = this.state.startPage;
+            var endPage = this.getEndPage();
+
+            //向上翻页
+            var upPageIndex = this.getUpPageIndex();
+            var upPage = this.turnPageLink(upPageIndex, "↑");
+
+            for (var i = startPage; i <= endPage; i++) {
+                var className = i == this.state.currentPage ? "active" : "";
+                arr.push(this.getPageLink(i, i.toString(), className));
+            }
+
+            //向下翻页
+            var downPageIndex = endPage == this.state.totalPage ? endPage : endPage + 1;
+            var downPage = this.turnPageLink(downPageIndex, "↓");
+
+            return _react2.default.createElement(
+                "div",
+                { className: "music-page" },
+                _react2.default.createElement(
+                    "ul",
+                    { className: "pagination flex-wrap" },
+                    upPage,
+                    arr,
+                    downPage
+                )
+            );
+        }
+    }, {
+        key: "getEndPage",
+        value: function getEndPage() {
+            var start = this.state.startPage;
+            var length = this.state.showCount;
+            var total = this.state.totalPage;
+            var tmpEnd = start + length - 1;
+            return tmpEnd > total ? total : tmpEnd;
+        }
+    }, {
+        key: "getUpPageIndex",
+        value: function getUpPageIndex() {
+            var start = this.state.startPage;
+            var length = this.state.showCount;
+            //let total = this.state.totalPage;
+            var tmpStart = start - length;
+            return tmpStart > 0 ? tmpStart : 1;
+        }
+    }, {
+        key: "getPageLink",
+        value: function getPageLink(index, text, className) {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                "li",
+                { key: index, className: "page-item " + className, onClick: function onClick() {
+                        _this2.turnToPage(index);
+                    } },
+                _react2.default.createElement(
+                    "a",
+                    { href: "javascript:void(0);", className: "page-link" },
+                    text
+                )
+            );
+        }
+    }, {
+        key: "turnPageLink",
+        value: function turnPageLink(index, text) {
+            var _this3 = this;
+
+            return _react2.default.createElement(
+                "li",
+                { className: "page-item", onClick: function onClick() {
+                        _this3.turnPage(index);
+                    } },
+                _react2.default.createElement(
+                    "a",
+                    { href: "javascript:void(0);", className: "page-link" },
+                    text
+                )
+            );
+        }
+    }, {
+        key: "turnPage",
+        value: function turnPage(index) {
+            this.setState({
+                currentPage: index,
+                startPage: index
+            });
+            this.props.onPageChange(index);
+        }
+    }, {
+        key: "turnToPage",
+        value: function turnToPage(index) {
+            this.setState({ currentPage: index });
+            this.props.onPageChange(index);
+        }
+    }]);
+
+    return Page;
+}(_react.Component);
+
+/***/ }),
+
+/***/ 29:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(3))(0);
 
 /***/ }),
-/* 30 */
+
+/***/ 3:
+/***/ (function(module, exports) {
+
+module.exports = vendor_66051959b5dc94687d1b;
+
+/***/ }),
+
+/***/ 30:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(3))(1);
 
 /***/ }),
-/* 31 */
+
+/***/ 31:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -836,7 +1899,8 @@ function findTabbableDescendants(element) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 32 */
+
+/***/ 32:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -906,7 +1970,8 @@ function resetForTesting() {
 }
 
 /***/ }),
-/* 33 */
+
+/***/ 33:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -948,7 +2013,8 @@ function totalCount() {
 }
 
 /***/ }),
-/* 34 */
+
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -972,7 +2038,8 @@ exports.default = SafeHTMLElement;
 module.exports = exports['default'];
 
 /***/ }),
-/* 35 */
+
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1020,7 +2087,8 @@ var AxiosForm = exports.AxiosForm = function () {
 }();
 
 /***/ }),
-/* 36 */
+
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1038,7 +2106,8 @@ module.exports = function bind(fn, thisArg) {
 
 
 /***/ }),
-/* 37 */
+
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1226,7 +2295,8 @@ module.exports = function xhrAdapter(config) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 38 */
+
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1251,7 +2321,8 @@ module.exports = function createError(message, config, code, request, response) 
 
 
 /***/ }),
-/* 39 */
+
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1263,7 +2334,8 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 40 */
+
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1289,22 +2361,8 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 41 */,
-/* 42 */,
-/* 43 */,
-/* 44 */,
-/* 45 */,
-/* 46 */,
-/* 47 */,
-/* 48 */,
-/* 49 */,
-/* 50 */,
-/* 51 */,
-/* 52 */,
-/* 53 */,
-/* 54 */,
-/* 55 */,
-/* 56 */
+
+/***/ 56:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1324,7 +2382,8 @@ exports.default = _Modal2.default;
 module.exports = exports['default'];
 
 /***/ }),
-/* 57 */
+
+/***/ 57:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1551,7 +2610,8 @@ exports.default = Modal;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 58 */
+
+/***/ 58:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2101,13 +3161,22 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 59 */
+
+/***/ 59:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(3))(3);
 
 /***/ }),
-/* 60 */
+
+/***/ 6:
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(68);
+
+/***/ }),
+
+/***/ 60:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2174,7 +3243,8 @@ module.exports = checkPropTypes;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 61 */
+
+/***/ 61:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2239,7 +3309,8 @@ module.exports = function() {
 
 
 /***/ }),
-/* 62 */
+
+/***/ 62:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2626,7 +3697,8 @@ module.exports = exports['default'];
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
-/* 63 */
+
+/***/ 63:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2719,7 +3791,8 @@ function teardownScopedFocus() {
 }
 
 /***/ }),
-/* 64 */
+
+/***/ 64:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2754,7 +3827,8 @@ function scopeTab(node, event) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 65 */
+
+/***/ 65:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2791,7 +3865,8 @@ function remove(bodyClass) {
 }
 
 /***/ }),
-/* 66 */
+
+/***/ 66:
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2838,13 +3913,15 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 67 */
+
+/***/ 67:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
 /***/ }),
-/* 68 */
+
+/***/ 68:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2903,7 +3980,8 @@ module.exports.default = axios;
 
 
 /***/ }),
-/* 69 */
+
+/***/ 69:
 /***/ (function(module, exports) {
 
 /*!
@@ -2930,7 +4008,8 @@ function isSlowBuffer (obj) {
 
 
 /***/ }),
-/* 70 */
+
+/***/ 70:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3023,7 +4102,8 @@ module.exports = Axios;
 
 
 /***/ }),
-/* 71 */
+
+/***/ 71:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3042,7 +4122,8 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
 
 
 /***/ }),
-/* 72 */
+
+/***/ 72:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3075,7 +4156,8 @@ module.exports = function settle(resolve, reject, response) {
 
 
 /***/ }),
-/* 73 */
+
+/***/ 73:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3103,7 +4185,8 @@ module.exports = function enhanceError(error, config, code, request, response) {
 
 
 /***/ }),
-/* 74 */
+
+/***/ 74:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3178,7 +4261,8 @@ module.exports = function buildURL(url, params, paramsSerializer) {
 
 
 /***/ }),
-/* 75 */
+
+/***/ 75:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3222,7 +4306,8 @@ module.exports = function parseHeaders(headers) {
 
 
 /***/ }),
-/* 76 */
+
+/***/ 76:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3297,7 +4382,8 @@ module.exports = (
 
 
 /***/ }),
-/* 77 */
+
+/***/ 77:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3340,7 +4426,8 @@ module.exports = btoa;
 
 
 /***/ }),
-/* 78 */
+
+/***/ 78:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3400,7 +4487,8 @@ module.exports = (
 
 
 /***/ }),
-/* 79 */
+
+/***/ 79:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3459,7 +4547,8 @@ module.exports = InterceptorManager;
 
 
 /***/ }),
-/* 80 */
+
+/***/ 80:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3545,7 +4634,8 @@ module.exports = function dispatchRequest(config) {
 
 
 /***/ }),
-/* 81 */
+
+/***/ 81:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3572,7 +4662,8 @@ module.exports = function transformData(data, headers, fns) {
 
 
 /***/ }),
-/* 82 */
+
+/***/ 82:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3593,7 +4684,8 @@ module.exports = function isAbsoluteURL(url) {
 
 
 /***/ }),
-/* 83 */
+
+/***/ 83:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3614,7 +4706,8 @@ module.exports = function combineURLs(baseURL, relativeURL) {
 
 
 /***/ }),
-/* 84 */
+
+/***/ 84:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3678,7 +4771,8 @@ module.exports = CancelToken;
 
 
 /***/ }),
-/* 85 */
+
+/***/ 85:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3712,7 +4806,8 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 86 */
+
+/***/ 86:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3723,7 +4818,8 @@ exports.encode = exports.stringify = __webpack_require__(88);
 
 
 /***/ }),
-/* 87 */
+
+/***/ 87:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3814,7 +4910,8 @@ var isArray = Array.isArray || function (xs) {
 
 
 /***/ }),
-/* 88 */
+
+/***/ 88:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3905,967 +5002,7 @@ var objectKeys = Object.keys || function (obj) {
 };
 
 
-/***/ }),
-/* 89 */,
-/* 90 */,
-/* 91 */,
-/* 92 */,
-/* 93 */,
-/* 94 */,
-/* 95 */,
-/* 96 */,
-/* 97 */,
-/* 98 */,
-/* 99 */,
-/* 100 */,
-/* 101 */,
-/* 102 */,
-/* 103 */,
-/* 104 */,
-/* 105 */,
-/* 106 */,
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var ModalEnum = exports.ModalEnum = function ModalEnum() {
-    _classCallCheck(this, ModalEnum);
-
-    this.add = new ModalInfo(1, "添加歌单", "添加");
-    this.edit = new ModalInfo(2, "修改歌单", "修改");
-};
-
-var ModalInfo = exports.ModalInfo = function ModalInfo(id, title, btnLeftText) {
-    var inputText = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : "";
-
-    _classCallCheck(this, ModalInfo);
-
-    this.id = id;
-    this.title = title;
-    this.btnLeftText = btnLeftText;
-    this.inputText = inputText;
-};
-
-/***/ }),
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */,
-/* 123 */,
-/* 124 */,
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */,
-/* 133 */,
-/* 134 */,
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */,
-/* 152 */,
-/* 153 */,
-/* 154 */,
-/* 155 */,
-/* 156 */,
-/* 157 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _music = __webpack_require__(158);
-
-var _music2 = _interopRequireDefault(_music);
-
-var _reactDom = __webpack_require__(21);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-_reactDom2.default.render(_react2.default.createElement(_music2.default, null), document.querySelector(".body-content"));
-
-/***/ }),
-/* 158 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _AddSheetModal = __webpack_require__(159);
-
-var _SongList = __webpack_require__(160);
-
-var _SongList2 = _interopRequireDefault(_SongList);
-
-var _SheetList = __webpack_require__(162);
-
-var _SheetList2 = _interopRequireDefault(_SheetList);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Music = function (_Component) {
-    _inherits(Music, _Component);
-
-    function Music(props) {
-        _classCallCheck(this, Music);
-
-        var _this = _possibleConstructorReturn(this, (Music.__proto__ || Object.getPrototypeOf(Music)).call(this, props));
-
-        _this.state = {
-            currentSheet: null,
-            showModal: false
-        };
-
-        _this.handleCloseModal = _this.handleCloseModal.bind(_this);
-        _this.handleOpenModal = _this.handleOpenModal.bind(_this);
-        _this.selectSheetChange = _this.selectSheetChange.bind(_this);
-        return _this;
-    }
-
-    _createClass(Music, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'div',
-                    { className: 'row' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-md-3' },
-                        _react2.default.createElement(_SheetList2.default, {
-                            ref: function ref(item) {
-                                return _this2.sheetList = item;
-                            },
-                            selectSheetChange: this.selectSheetChange,
-                            handleOpenModal: this.handleOpenModal,
-                            handleCloseModal: this.handleCloseModal
-                        })
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'col-md-9' },
-                        _react2.default.createElement(_SongList2.default, {
-                            sheet: this.state.currentSheet
-                        })
-                    )
-                ),
-                _react2.default.createElement(_AddSheetModal.AddSheetModal, {
-                    ref: function ref(item) {
-                        return _this2.modal = item;
-                    },
-                    showModal: this.state.showModal,
-                    sheetList: this.sheetList,
-                    handleCloseModal: this.handleCloseModal })
-            );
-        }
-    }, {
-        key: 'selectSheetChange',
-        value: function selectSheetChange(sheet) {
-            this.setState({ currentSheet: sheet });
-        }
-    }, {
-        key: 'handleCloseModal',
-        value: function handleCloseModal() {
-            this.setState({ showModal: false });
-        }
-    }, {
-        key: 'handleOpenModal',
-        value: function handleOpenModal(modalInfo) {
-            this.modal.setModalInfo(modalInfo);
-            this.setState({ showModal: true });
-        }
-    }]);
-
-    return Music;
-}(_react.Component);
-
-exports.default = Music;
-
-/***/ }),
-/* 159 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.AddSheetModal = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactModal = __webpack_require__(56);
-
-var _reactModal2 = _interopRequireDefault(_reactModal);
-
-var _ModalEnum = __webpack_require__(118);
-
-__webpack_require__(67);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var AddSheetModal = exports.AddSheetModal = function (_Component) {
-    _inherits(AddSheetModal, _Component);
-
-    function AddSheetModal(props) {
-        _classCallCheck(this, AddSheetModal);
-
-        var _this = _possibleConstructorReturn(this, (AddSheetModal.__proto__ || Object.getPrototypeOf(AddSheetModal)).call(this, props));
-
-        _this.state = {
-            modalInfo: new _ModalEnum.ModalInfo(-1, "test", "test")
-        };
-
-        _this.addSheet = _this.addSheet.bind(_this);
-        _this.handleClick = _this.handleClick.bind(_this);
-        return _this;
-    }
-
-    _createClass(AddSheetModal, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var modalInfo = this.state.modalInfo;
-
-            return _react2.default.createElement(
-                _reactModal2.default,
-                {
-                    isOpen: this.props.showModal,
-                    className: 'Modal',
-                    overlayClassName: 'Overlay',
-                    contentLabel: modalInfo.title
-                },
-                _react2.default.createElement(
-                    'h1',
-                    null,
-                    modalInfo.title
-                ),
-                _react2.default.createElement('input', { className: 'form-control', defaultValue: modalInfo.inputText, ref: function ref(item) {
-                        return _this2._sheetInput = item;
-                    } }),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'd-flex mt-3' },
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-info', onClick: this.handleClick },
-                        modalInfo.btnLeftText
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { className: 'btn btn-outline-info ml-auto', onClick: this.props.handleCloseModal },
-                        '\u5173\u95ED'
-                    )
-                )
-            );
-        }
-    }, {
-        key: 'handleClick',
-        value: function handleClick() {
-            var info = this.state.modalInfo;
-            switch (info.id) {
-                case 1:
-                    this.addSheet();
-                    break;
-                case 2:
-                    this.editSheet();
-                    break;
-            }
-        }
-    }, {
-        key: 'addSheet',
-        value: function addSheet() {
-            if (this._sheetInput) {
-                var name = this._sheetInput.value;
-
-                if (name == null) {
-                    console.log("标题不为空");
-                    return;
-                }
-
-                this.props.sheetList.addSheet(name);
-            }
-        }
-    }, {
-        key: 'editSheet',
-        value: function editSheet() {
-            if (this._sheetInput) {
-                var name = this._sheetInput.value;
-
-                if (name == null) {
-                    console.log("标题不为空");
-                    return;
-                }
-
-                this.props.sheetList.editSheet(name, this.state.modalInfo.data);
-            }
-        }
-    }, {
-        key: 'setModalInfo',
-        value: function setModalInfo(modalInfo) {
-            this.setState({ modalInfo: modalInfo });
-        }
-    }]);
-
-    return AddSheetModal;
-}(_react.Component);
-
-/***/ }),
-/* 160 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _UploadPreview = __webpack_require__(161);
-
-var _UploadPreview2 = _interopRequireDefault(_UploadPreview);
-
-var _AxiosInstance = __webpack_require__(35);
-
-var _axios = __webpack_require__(6);
-
-var axios = _interopRequireWildcard(_axios);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SongList = function (_Component) {
-    _inherits(SongList, _Component);
-
-    function SongList(props) {
-        _classCallCheck(this, SongList);
-
-        var _this = _possibleConstructorReturn(this, (SongList.__proto__ || Object.getPrototypeOf(SongList)).call(this, props));
-
-        _this.uploadClick = _this.uploadClick.bind(_this);
-        _this.handleFile = _this.handleFile.bind(_this);
-
-        _this.urls = {
-            songRemoveUrl: "/Music",
-            sheetSongsUrl: "/Sheet",
-            songAddUrl: "/Music/Add"
-
-        };
-        var sheet = _this.props.sheet;
-        if (sheet) {
-            _this.sheetName = sheet.name;
-            _this.initFetchPage(sheet.id, 1);
-        }
-
-        _this.axiosIns = _AxiosInstance.AxiosForm.GetIns();
-        _this.state = { files: null, sheetPage: null };
-
-        _this.addSongs = _this.addSongs.bind(_this);
-        return _this;
-    }
-
-    _createClass(SongList, [{
-        key: "componentWillReceiveProps",
-        value: function componentWillReceiveProps(props) {
-            var sheet = props.sheet;
-            var sheetPage = this.state.sheetPage;
-            if (sheet === undefined) {
-                return;
-            }
-            if (!sheetPage || sheet.id !== sheetPage.id) {
-                this.sheetName = sheet.name;
-                this.initFetchPage(sheet.id, 1);
-            }
-        }
-    }, {
-        key: "componentDidUpdate",
-        value: function componentDidUpdate() {
-            if (this._audio) this._audio.volume = 0.5;
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            if (!this.state.sheetPage) return _react2.default.createElement("noscript", null);
-            return _react2.default.createElement(
-                "div",
-                null,
-                _react2.default.createElement(
-                    "h5",
-                    null,
-                    "\u5F53\u524D\u6B4C\u5355\uFF1A",
-                    this.sheetName
-                ),
-                _react2.default.createElement("input", { type: "file",
-                    ref: function ref(item) {
-                        return _this2._fileInput = item;
-                    },
-                    accept: "audio/*",
-                    onChange: this.handleFile,
-                    multiple: true,
-                    style: { display: "none" } }),
-                _react2.default.createElement(
-                    "div",
-                    { className: "d-flex" },
-                    _react2.default.createElement("audio", {
-                        ref: function ref(item) {
-                            return _this2._audio = item;
-                        },
-                        src: "./songs/song01.mp3", controls: true, loop: true }),
-                    _react2.default.createElement(
-                        "button",
-                        { title: "\u4E0A\u4F20\u6B4C\u66F2",
-                            onClick: this.uploadClick,
-                            className: "btn btn-outline-primary ml-auto mr-lg-5" },
-                        _react2.default.createElement("i", { className: "fa fa-fw fa-plus" })
-                    )
-                ),
-                _react2.default.createElement(_UploadPreview2.default, { files: this.state.files, addSongs: this.addSongs }),
-                _react2.default.createElement(
-                    "table",
-                    { className: "w-100" },
-                    _react2.default.createElement(
-                        "thead",
-                        null,
-                        _react2.default.createElement(
-                            "tr",
-                            null,
-                            _react2.default.createElement(
-                                "th",
-                                null,
-                                "\u6807\u9898"
-                            )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        "tbody",
-                        null,
-                        this.state.sheetPage.songs.map(function (t) {
-                            return _react2.default.createElement(
-                                "tr",
-                                { key: t.id },
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
-                                    t.title
-                                ),
-                                _react2.default.createElement(
-                                    "td",
-                                    null,
-                                    _react2.default.createElement(
-                                        "button",
-                                        { className: "btn btn-light", onClick: function onClick() {
-                                                return _this2.playSong(t);
-                                            } },
-                                        _react2.default.createElement("i", { className: "fa fa-play fa-fw" })
-                                    ),
-                                    _react2.default.createElement(
-                                        "button",
-                                        { className: "btn btn-light", onClick: function onClick() {
-                                                return _this2.removeSong(t);
-                                            } },
-                                        _react2.default.createElement("i", { className: "fa fa-remove fa-fw" })
-                                    )
-                                )
-                            );
-                        })
-                    )
-                )
-            );
-        }
-    }, {
-        key: "uploadClick",
-        value: function uploadClick() {
-            var input = this._fileInput;
-            if (input) input.click();
-        }
-    }, {
-        key: "handleFile",
-        value: function handleFile() {
-            if (!this._fileInput) return;
-            this.setState({ files: this._fileInput.files });
-        }
-    }, {
-        key: "playSong",
-        value: function playSong(song) {
-            if (this._audio) {
-                this._audio.src = song.path;
-                this._audio.play();
-            }
-        }
-    }, {
-        key: "addSongs",
-        value: function addSongs(files) {
-            var _this3 = this;
-
-            if (!files) return;
-            var sheetId = this.state.sheetPage.id;
-            var form1 = new FormData();
-            for (var i = 0; i < files.length; i++) {
-                form1.append("songs", files[i]);
-            }
-            form1.append("sheetId", sheetId);
-            axios.post(this.urls.songAddUrl, form1, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then(function (response) {
-                if (response.data.success) {
-                    console.log('上传成功');
-                    _this3.setState({ files: null });
-                    _this3.fetchPage(_this3.state.sheetPage.currentPage);
-                }
-            });
-        }
-    }, {
-        key: "removeSong",
-        value: function removeSong(song) {
-            var _this4 = this;
-
-            axios.delete(this.urls.songRemoveUrl + "/" + song.id).then(function (response) {
-                console.log('删除成功');
-                _this4.fetchPage(_this4.state.sheetPage.currentPage);
-            });
-        }
-    }, {
-        key: "fetchPage",
-        value: function fetchPage(page) {
-            var sheetId = this.state.sheetPage.id;
-            this.initFetchPage(sheetId, page);
-        }
-    }, {
-        key: "initFetchPage",
-        value: function initFetchPage(sheetId, page) {
-            var _this5 = this;
-
-            this.axiosIns.get(this.urls.sheetSongsUrl, {
-                params: {
-                    id: sheetId,
-                    currentPage: page,
-                    pageSize: 15
-                }
-            }).then(function (response) {
-                if (response.data.currentPage) {
-                    _this5.setState({ sheetPage: response.data });
-                } else {
-                    console.log("fetch page error ?_?");
-                }
-            });
-        }
-    }]);
-
-    return SongList;
-}(_react.Component);
-
-exports.default = SongList;
-
-/***/ }),
-/* 161 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var UploadPreview = function (_Component) {
-    _inherits(UploadPreview, _Component);
-
-    function UploadPreview(props) {
-        _classCallCheck(this, UploadPreview);
-
-        return _possibleConstructorReturn(this, (UploadPreview.__proto__ || Object.getPrototypeOf(UploadPreview)).call(this, props));
-    }
-
-    _createClass(UploadPreview, [{
-        key: "render",
-        value: function render() {
-            var _this2 = this;
-
-            var files = this.props.files;
-            if (!files) {
-                return _react2.default.createElement("noscript", null);
-            }
-
-            return _react2.default.createElement(
-                "div",
-                null,
-                _react2.default.createElement(
-                    "ul",
-                    null,
-                    Array.prototype.map.call(files, function (file, index) {
-                        return _react2.default.createElement(
-                            "li",
-                            { key: index },
-                            file.name,
-                            ",",
-                            file.size
-                        );
-                    })
-                ),
-                _react2.default.createElement(
-                    "div",
-                    { className: "d-flex" },
-                    _react2.default.createElement(
-                        "button",
-                        {
-                            onClick: function onClick() {
-                                return _this2.props.addSongs(files);
-                            },
-                            className: "ml-auto mr-lg-5 btn btn-secondary" },
-                        "\u4E0A\u4F20"
-                    )
-                )
-            );
-        }
-    }]);
-
-    return UploadPreview;
-}(_react.Component);
-
-exports.default = UploadPreview;
-
-/***/ }),
-/* 162 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _axios = __webpack_require__(6);
-
-var axios = _interopRequireWildcard(_axios);
-
-var _AxiosInstance = __webpack_require__(35);
-
-var _ModalEnum = __webpack_require__(118);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var SheetList = function (_Component) {
-    _inherits(SheetList, _Component);
-
-    function SheetList(props) {
-        _classCallCheck(this, SheetList);
-
-        var _this = _possibleConstructorReturn(this, (SheetList.__proto__ || Object.getPrototypeOf(SheetList)).call(this, props));
-
-        _this.urls = {
-            removeUrl: "/Sheet",
-            getListUrl: "/Music/Sheets",
-            addUrl: "/Sheet",
-            editUrl: "/Sheet"
-        };
-        _this.axiosIns = _AxiosInstance.AxiosForm.GetIns();
-        _this.modalEnum = new _ModalEnum.ModalEnum();
-
-        _this.state = {
-            sheets: []
-        };
-
-        _this.fetchSheets();
-        return _this;
-    }
-
-    _createClass(SheetList, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var sheets = this.state.sheets;
-
-            return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'table',
-                    { className: 'w-100' },
-                    _react2.default.createElement(
-                        'tbody',
-                        null,
-                        sheets.map(function (item) {
-                            return _react2.default.createElement(
-                                'tr',
-                                { key: item.id },
-                                _react2.default.createElement(
-                                    'td',
-                                    null,
-                                    _react2.default.createElement(
-                                        'button',
-                                        { className: 'btn btn-link',
-                                            onClick: function onClick() {
-                                                return _this2.setSheet(item.id);
-                                            } },
-                                        item.name
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    'td',
-                                    null,
-                                    _react2.default.createElement(
-                                        'button',
-                                        {
-                                            onClick: function onClick() {
-                                                _this2.removeSheet(item);
-                                            },
-                                            className: 'btn btn-outline-secondary border-0' },
-                                        _react2.default.createElement('i', { className: 'fa fa-remove fa-fw' })
-                                    ),
-                                    _react2.default.createElement(
-                                        'button',
-                                        {
-                                            onClick: function onClick() {
-                                                return _this2.handleOpenModal(item);
-                                            },
-                                            className: 'btn btn-outline-secondary border-0' },
-                                        _react2.default.createElement('i', { className: 'fa fa-edit fa-fw' })
-                                    )
-                                )
-                            );
-                        })
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'd-flex' },
-                    _react2.default.createElement(
-                        'button',
-                        { title: '\u4E0A\u4E00\u9875', className: 'btn btn-light' },
-                        _react2.default.createElement('i', { className: 'fa fa-arrow-left fa-fw' })
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { title: '\u4E0B\u4E00\u9875', className: 'btn btn-light' },
-                        _react2.default.createElement('i', { className: 'fa fa-arrow-right fa-fw' })
-                    ),
-                    _react2.default.createElement(
-                        'button',
-                        { onClick: function onClick() {
-                                return _this2.props.handleOpenModal(_this2.modalEnum.add);
-                            }, title: '\u6DFB\u52A0\u6B4C\u5355',
-                            className: 'btn btn-outline-primary ml-auto mr-lg-5' },
-                        _react2.default.createElement('i', { className: 'fa fa-plus fa-fw' })
-                    )
-                )
-            );
-        }
-    }, {
-        key: 'removeSheet',
-        value: function removeSheet(sheet) {
-            var _this3 = this;
-
-            console.log("remove sheet Click");
-            axios.delete(this.urls.removeUrl + "/" + sheet.id).then(function (response) {
-                _this3.fetchSheets();
-            });
-        }
-    }, {
-        key: 'fetchSheets',
-        value: function fetchSheets() {
-            var _this4 = this;
-
-            this.axiosIns.post(this.urls.getListUrl).then(function (response) {
-                if (response.data instanceof Array) {
-                    _this4.setState({ sheets: response.data });
-                    _this4.props.selectSheetChange(_this4.state.sheets[0]);
-                }
-            });
-        }
-    }, {
-        key: 'setSheet',
-        value: function setSheet(id) {
-            var item = this.state.sheets.find(function (item) {
-                return item.id == id;
-            });
-            this.props.selectSheetChange(item);
-        }
-    }, {
-        key: 'addSheet',
-        value: function addSheet(name) {
-            var _this5 = this;
-
-            var sheets = this.state.sheets;
-            for (var i = 0; i < sheets.length; i++) {
-                if (sheets[i].title == name) {
-                    console.log("标题重复了");
-                    return;
-                }
-            }
-            this.axiosIns.post(this.urls.addUrl, { name: name }).then(function (response) {
-                if (!response.data.id) {
-                    console.log("添加sheet出错");
-                }
-                sheets.push(response.data);
-                _this5.setState({ sheets: sheets });
-                _this5.props.handleCloseModal();
-            }).catch(function (error) {
-                console.log("添加sheet出错");
-            });
-        }
-    }, {
-        key: 'editSheet',
-        value: function editSheet(name, sheet) {
-            var _this6 = this;
-
-            var index = 0;
-            var sheets = this.state.sheets;
-            for (var i = 0; i < sheets.length; i++) {
-                if (sheets[i].title == name) {
-                    console.log("标题重复了");
-                    return;
-                }
-                if (sheets[i].id == sheet.id) {
-                    index = i;
-                }
-            }
-
-            this.axiosIns.put(this.urls.editUrl + "/" + sheet.id, { name: name }).then(function (response) {
-                if (!response.data.id) {
-                    return;
-                }
-                sheets[index] = response.data;
-                _this6.setState({ sheets: sheets });
-                _this6.props.handleCloseModal();
-            }).catch(function (error) {
-                console.log(error);
-            });
-        }
-    }, {
-        key: 'handleOpenModal',
-        value: function handleOpenModal(item) {
-            this.modalEnum.edit.inputText = item.name;
-            this.modalEnum.edit.data = item;
-            this.props.handleOpenModal(this.modalEnum.edit);
-        }
-    }]);
-
-    return SheetList;
-}(_react.Component);
-
-exports.default = SheetList;
-
 /***/ })
-/******/ ]);
+
+/******/ });
 //# sourceMappingURL=music.bundle.js.map
