@@ -6371,7 +6371,7 @@ var _ArticleView = __webpack_require__(270);
 
 var _ArticleView2 = _interopRequireDefault(_ArticleView);
 
-var _AddDialog = __webpack_require__(276);
+var _AddDialog = __webpack_require__(277);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6389,8 +6389,12 @@ var Article = function (_Component) {
 
         var _this = _possibleConstructorReturn(this, (Article.__proto__ || Object.getPrototypeOf(Article)).call(this));
 
+        _this.state = { treeVisible: true };
+
         _this.onSelectArticle = _this.onSelectArticle.bind(_this);
         _this.openDialog = _this.openDialog.bind(_this);
+        _this.toggleShowTree = _this.toggleShowTree.bind(_this);
+        _this.showTree = _this.showTree.bind(_this);
         return _this;
     }
 
@@ -6399,26 +6403,39 @@ var Article = function (_Component) {
         value: function render() {
             var _this2 = this;
 
+            var visible = this.state.treeVisible;
             return _react2.default.createElement(
                 'div',
-                null,
+                { className: 'article-wrap' },
                 _react2.default.createElement(
                     'div',
                     { className: 'row' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-md-3' },
+                        { className: visible ? "col-md-3 p-0 tree-wrap" : "d-none" },
                         _react2.default.createElement(_ArticleTree2.default, {
                             ref: function ref(item) {
                                 return _this2.tree = item;
                             },
-                            openDialog: this.openDialog,
+                            toggleShowTree: this.toggleShowTree //TODO:change to hidden
+                            , openDialog: this.openDialog,
                             onSelectArticle: this.onSelectArticle
                         })
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'col-md-9' },
+                        { className: visible ? "col-md-9" : "" },
+                        _react2.default.createElement(
+                            'div',
+                            { className: visible ? "d-none" : "show-tree-nav" },
+                            _react2.default.createElement(
+                                'button',
+                                { className: 'btn btn-light',
+                                    onClick: this.showTree
+                                },
+                                _react2.default.createElement('i', { className: 'fa fa-cube fa-fw' })
+                            )
+                        ),
                         _react2.default.createElement(_ArticleView2.default, { ref: function ref(item) {
                                 return _this2.articleView = item;
                             } })
@@ -6444,6 +6461,16 @@ var Article = function (_Component) {
             if (this.dialog) {
                 this.dialog.handleOpenModal(type, id, name);
             }
+        }
+    }, {
+        key: 'toggleShowTree',
+        value: function toggleShowTree() {
+            this.setState({ treeVisible: false });
+        }
+    }, {
+        key: 'showTree',
+        value: function showTree() {
+            this.setState({ treeVisible: true });
         }
     }]);
 
@@ -6486,6 +6513,10 @@ __webpack_require__(268);
 var _ToolBar = __webpack_require__(269);
 
 var _ToolBar2 = _interopRequireDefault(_ToolBar);
+
+var _TopToolBar = __webpack_require__(279);
+
+var _TopToolBar2 = _interopRequireDefault(_TopToolBar);
 
 var _AxiosInstance = __webpack_require__(35);
 
@@ -6575,6 +6606,9 @@ var ArticleTree = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 { className: 'tree-nav' },
+                _react2.default.createElement(_TopToolBar2.default, {
+                    toggleShowTree: this.props.toggleShowTree
+                }),
                 _react2.default.createElement(
                     _rcTree2.default,
                     {
@@ -6691,6 +6725,7 @@ var ArticleTree = function (_Component) {
             });
 
             this.setState({
+                visible: true,
                 treeData: data
             });
         }
@@ -10602,13 +10637,13 @@ var prism = _interopRequireWildcard(_prismjs);
 
 var _DateUtil = __webpack_require__(273);
 
-var _ArticleInfo = __webpack_require__(278);
+var _ArticleInfo = __webpack_require__(274);
 
 var _ArticleInfo2 = _interopRequireDefault(_ArticleInfo);
 
-__webpack_require__(274);
-
 __webpack_require__(275);
+
+__webpack_require__(276);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -11590,9 +11625,76 @@ var DateUtil = exports.DateUtil = function () {
 
 /***/ }),
 /* 274 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-// removed by extract-text-webpack-plugin
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ArticleInfos = function () {
+    function ArticleInfos() {
+        _classCallCheck(this, ArticleInfos);
+
+        this.infos = [];
+    }
+
+    _createClass(ArticleInfos, [{
+        key: "add",
+        value: function add(info) {
+            //if (this.infos.forEach(item => {
+            //    if (item.url === info.url) {
+            //        return;
+            //    }
+            //}));
+            if (this.infos.length > 10) {
+                this.infos.shift(); //删除数组第一个元素
+            }
+            this.infos.push(info); //在数组末尾添加元素
+            return true;
+        }
+    }, {
+        key: "tryGet",
+        value: function tryGet(url) {
+            var info = void 0;
+            this.infos.forEach(function (item) {
+                if (item.url === url) {
+                    info = item;
+                    return false;
+                }
+            });
+            return info;
+        }
+    }, {
+        key: "onEdit",
+        value: function onEdit(url) {
+            for (var i = 0; i < this.infos.length; i++) {
+                var item = this.infos[i];
+                if (item.url === url) {
+                    this.infos.splice(i, 1);
+                    return false;
+                }
+            }
+        }
+    }]);
+
+    return ArticleInfos;
+}();
+
+exports.default = ArticleInfos;
+
+var ArticleInfo = exports.ArticleInfo = function ArticleInfo(data, url) {
+    _classCallCheck(this, ArticleInfo);
+
+    this.data = data;
+    this.url = url;
+};
 
 /***/ }),
 /* 275 */
@@ -11602,6 +11704,12 @@ var DateUtil = exports.DateUtil = function () {
 
 /***/ }),
 /* 276 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 277 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11760,8 +11868,8 @@ var AddDialog = exports.AddDialog = function (_React$Component) {
 }(React.Component);
 
 /***/ }),
-/* 277 */,
-/* 278 */
+/* 278 */,
+/* 279 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11773,65 +11881,70 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var ArticleInfos = function () {
-    function ArticleInfos() {
-        _classCallCheck(this, ArticleInfos);
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-        this.infos = [];
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var TopToolBar = function (_Component) {
+    _inherits(TopToolBar, _Component);
+
+    function TopToolBar() {
+        _classCallCheck(this, TopToolBar);
+
+        var _this = _possibleConstructorReturn(this, (TopToolBar.__proto__ || Object.getPrototypeOf(TopToolBar)).call(this));
+
+        _this.state = {};
+        return _this;
     }
 
-    _createClass(ArticleInfos, [{
-        key: "add",
-        value: function add(info) {
-            //if (this.infos.forEach(item => {
-            //    if (item.url === info.url) {
-            //        return;
-            //    }
-            //}));
-            if (this.infos.length > 10) {
-                this.infos.shift(); //删除数组第一个元素
-            }
-            this.infos.push(info); //在数组末尾添加元素
-            return true;
-        }
-    }, {
-        key: "tryGet",
-        value: function tryGet(url) {
-            var info = void 0;
-            this.infos.forEach(function (item) {
-                if (item.url === url) {
-                    info = item;
-                    return false;
-                }
-            });
-            return info;
-        }
-    }, {
-        key: "onEdit",
-        value: function onEdit(url) {
-            for (var i = 0; i < this.infos.length; i++) {
-                var item = this.infos[i];
-                if (item.url === url) {
-                    this.infos.splice(i, 1);
-                    return false;
-                }
-            }
+    _createClass(TopToolBar, [{
+        key: "render",
+        value: function render() {
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "div",
+                    { className: "btn-group w-100" },
+                    _react2.default.createElement(
+                        "button",
+                        { className: "btn btn-light"
+                        },
+                        _react2.default.createElement("i", { className: "fa fa-home fa-fw" }),
+                        " \u56DE\u5230\u6839\u76EE\u5F55"
+                    ),
+                    _react2.default.createElement(
+                        "button",
+                        { className: "btn btn-light",
+                            onClick: this.props.toggleShowTree
+                        },
+                        _react2.default.createElement("i", { className: "fa fa-cube fa-fw" }),
+                        " \u6298\u53E0"
+                    )
+                )
+            );
         }
     }]);
 
-    return ArticleInfos;
-}();
+    return TopToolBar;
+}(_react.Component);
 
-exports.default = ArticleInfos;
+/*
+<button className="btn btn-light" title="打开文章"
+                    onClick={this.props.openArticle}
+                    disabled={!isArticle}><i className="fa fa-file-text-o fa-fw"></i></button>
+*/
 
-var ArticleInfo = exports.ArticleInfo = function ArticleInfo(data, url) {
-    _classCallCheck(this, ArticleInfo);
 
-    this.data = data;
-    this.url = url;
-};
+exports.default = TopToolBar;
 
 /***/ })
 /******/ ]);

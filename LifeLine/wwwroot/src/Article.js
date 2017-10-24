@@ -7,21 +7,32 @@ class Article extends Component {
     constructor() {
         super();
 
+        this.state = { treeVisible: true };
+
         this.onSelectArticle = this.onSelectArticle.bind(this);
         this.openDialog = this.openDialog.bind(this);
+        this.toggleShowTree = this.toggleShowTree.bind(this);
+        this.showTree = this.showTree.bind(this);
     }
 
     render() {
-        return <div>
+        let visible = this.state.treeVisible;
+        return <div className="article-wrap">
             <div className="row">
-                <div className="col-md-3">
+                <div className={visible?"col-md-3 p-0 tree-wrap":"d-none"}>
                     <ArticleTree
-                        ref={item => this.tree=item}
+                        ref={item => this.tree = item}
+                        toggleShowTree={this.toggleShowTree}//TODO:change to hidden
                         openDialog={this.openDialog}
                         onSelectArticle={this.onSelectArticle}
                     />
                 </div>
-                <div className="col-md-9">
+                <div className={visible ? "col-md-9" : ""}>
+                    <div className={visible ? "d-none":"show-tree-nav"}>
+                        <button className="btn btn-light"
+                            onClick={this.showTree}
+                        ><i className="fa fa-cube fa-fw"></i></button>
+                    </div>
                     <ArticleView ref={item => this.articleView = item} />
                 </div>
             </div>
@@ -41,6 +52,14 @@ class Article extends Component {
         if (this.dialog) {
             this.dialog.handleOpenModal(type, id, name);
         }
+    }
+
+    toggleShowTree() {
+        this.setState({ treeVisible: false });
+    }
+
+    showTree() {
+        this.setState({ treeVisible: true });
     }
 }
 

@@ -21,3 +21,15 @@
     .rc-tree li span.rc-tree-iconEle.rc-tree-icon__close:before {
         content: "\f07b";
     }
+
+.tree-wrap{
+    overflow:auto;
+}
+
+.article-wrap>div.row{
+    align-items:flex-start;
+}
+
+.btn-group > .btn{
+    flex-grow:1;
+}

@@ -5,6 +5,7 @@ import { TreeSelectInfo } from './TreeModel';
 import 'rc-tree/assets/index.css';
 import '../css/articleTree.css';
 import ToolBar from "./ToolBar";
+import TopToolBar from "./TopToolBar";
 import {AxiosForm} from '../Common/AxiosInstance';
 
 export default class ArticleTree extends Component {
@@ -67,6 +68,9 @@ export default class ArticleTree extends Component {
         };
 
         return <div className="tree-nav">
+            <TopToolBar
+                toggleShowTree={this.props.toggleShowTree}
+            />
             <Tree
                 defaultExpandAll={true}
                 draggable={true}
@@ -170,6 +174,7 @@ export default class ArticleTree extends Component {
         });
         
         this.setState({
+            visible: true,
             treeData: data,
         });
     }
@@ -223,4 +228,5 @@ export default class ArticleTree extends Component {
                 this.toolBar.setState({isLoad:false});
         });
     }
+
 }
