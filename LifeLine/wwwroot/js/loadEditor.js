@@ -9,5 +9,5 @@
         "uploadimage"
     ],
     toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | codesample link image uploadimage",
-      upload_image_url: "/Editor/Upload2"
+      upload_image_url: "/api/Image/Up"
 })

@@ -6522,7 +6522,7 @@ var ArticleTree = function (_Component) {
 
         _this.fetchData();
         _this.onSelect = _this.onSelect.bind(_this);
-        _this.openArticle = _this.openArticle.bind(_this);
+        //this.openArticle = this.openArticle.bind(this);
         _this.fetchData = _this.fetchData.bind(_this);
         _this.doRefresh = _this.doRefresh.bind(_this);
         _this.removeSelect = _this.removeSelect.bind(_this);
@@ -6705,6 +6705,11 @@ var ArticleTree = function (_Component) {
             var type = key.substring(0, 1);
             var id = key.substring(1);
             this.selectInfo = new _TreeModel.TreeSelectInfo(type, id, treeNode.props.title);
+            //如果是文章，打开
+            if (this.selectInfo.type === 'A') {
+                this.props.onSelectArticle(this.selectInfo.id);
+            }
+            //设置toolBar状态
             if (this.toolBar) this.toolBar.setState({ selectInfo: this.selectInfo });
         }
     }, {
@@ -6722,14 +6727,14 @@ var ArticleTree = function (_Component) {
                 _this4.doRefresh();
             });
         }
-    }, {
-        key: 'openArticle',
-        value: function openArticle() {
-            var selectInfo = this.selectInfo;
-            if (selectInfo.type === 'A') {
-                this.props.onSelectArticle(selectInfo.id);
-            }
-        }
+
+        //openArticle() {
+        //    let selectInfo = this.selectInfo;
+        //    if (selectInfo.type === 'A') {
+        //        this.props.onSelectArticle(selectInfo.id);
+        //    }
+        //}
+
     }, {
         key: 'doRefresh',
         value: function doRefresh() {
@@ -10527,13 +10532,6 @@ var ToolBar = function (_Component) {
                     ),
                     _react2.default.createElement(
                         "button",
-                        { className: "btn btn-light", title: "\u6253\u5F00\u6587\u7AE0",
-                            onClick: this.props.openArticle,
-                            disabled: !isArticle },
-                        _react2.default.createElement("i", { className: "fa fa-file-text-o fa-fw" })
-                    ),
-                    _react2.default.createElement(
-                        "button",
                         { className: "btn btn-light", title: "\u5237\u65B0",
                             disabled: this.state.isLoad,
                             onClick: this.props.doRefresh },
@@ -10568,6 +10566,13 @@ var ToolBar = function (_Component) {
     return ToolBar;
 }(_react.Component);
 
+/*
+<button className="btn btn-light" title="打开文章"
+                    onClick={this.props.openArticle}
+                    disabled={!isArticle}><i className="fa fa-file-text-o fa-fw"></i></button>
+*/
+
+
 exports.default = ToolBar;
 
 /***/ }),
@@ -10597,6 +10602,10 @@ var prism = _interopRequireWildcard(_prismjs);
 
 var _DateUtil = __webpack_require__(273);
 
+var _ArticleInfo = __webpack_require__(278);
+
+var _ArticleInfo2 = _interopRequireDefault(_ArticleInfo);
+
 __webpack_require__(274);
 
 __webpack_require__(275);
@@ -10623,6 +10632,8 @@ var ArticleTree = function (_Component) {
             articleUrl: "/api/Article"
         };
 
+        _this.infos = new _ArticleInfo2.default();
+
         _this.state = {
             article: null
         };
@@ -10641,7 +10652,7 @@ var ArticleTree = function (_Component) {
                 'div',
                 null,
                 _react2.default.createElement(
-                    'h1',
+                    'h3',
                     null,
                     article.title
                 ),
@@ -10689,8 +10700,15 @@ var ArticleTree = function (_Component) {
         value: function openArticle(id) {
             var _this2 = this;
 
-            axios.get(this.urls.articleUrl + "/" + id).then(function (response) {
+            var url = this.urls.articleUrl + "/" + id;
+            var info = this.infos.tryGet(url);
+            if (info !== undefined) {
+                this.setState({ article: info.data });
+                return;
+            }
+            axios.get(url).then(function (response) {
                 if (response.data) {
+                    _this2.infos.add(new _ArticleInfo.ArticleInfo(response.data, url));
                     _this2.setState({ article: response.data });
                 }
             });
@@ -11740,6 +11758,80 @@ var AddDialog = exports.AddDialog = function (_React$Component) {
 
     return AddDialog;
 }(React.Component);
+
+/***/ }),
+/* 277 */,
+/* 278 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var ArticleInfos = function () {
+    function ArticleInfos() {
+        _classCallCheck(this, ArticleInfos);
+
+        this.infos = [];
+    }
+
+    _createClass(ArticleInfos, [{
+        key: "add",
+        value: function add(info) {
+            //if (this.infos.forEach(item => {
+            //    if (item.url === info.url) {
+            //        return;
+            //    }
+            //}));
+            if (this.infos.length > 10) {
+                this.infos.shift(); //删除数组第一个元素
+            }
+            this.infos.push(info); //在数组末尾添加元素
+            return true;
+        }
+    }, {
+        key: "tryGet",
+        value: function tryGet(url) {
+            var info = void 0;
+            this.infos.forEach(function (item) {
+                if (item.url === url) {
+                    info = item;
+                    return false;
+                }
+            });
+            return info;
+        }
+    }, {
+        key: "onEdit",
+        value: function onEdit(url) {
+            for (var i = 0; i < this.infos.length; i++) {
+                var item = this.infos[i];
+                if (item.url === url) {
+                    this.infos.splice(i, 1);
+                    return false;
+                }
+            }
+        }
+    }]);
+
+    return ArticleInfos;
+}();
+
+exports.default = ArticleInfos;
+
+var ArticleInfo = exports.ArticleInfo = function ArticleInfo(data, url) {
+    _classCallCheck(this, ArticleInfo);
+
+    this.data = data;
+    this.url = url;
+};
 
 /***/ })
 /******/ ]);

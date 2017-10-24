@@ -27,7 +27,7 @@ export default class ArticleTree extends Component {
 
         this.fetchData();
         this.onSelect = this.onSelect.bind(this);
-        this.openArticle = this.openArticle.bind(this);
+        //this.openArticle = this.openArticle.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.doRefresh = this.doRefresh.bind(this);
         this.removeSelect = this.removeSelect.bind(this);
@@ -181,6 +181,11 @@ export default class ArticleTree extends Component {
         let type = key.substring(0, 1);
         let id = key.substring(1);
         this.selectInfo = new TreeSelectInfo(type, id, treeNode.props.title);
+        //如果是文章，打开
+        if (this.selectInfo.type === 'A') {
+            this.props.onSelectArticle(this.selectInfo.id);
+        }
+        //设置toolBar状态
         if(this.toolBar)
             this.toolBar.setState({selectInfo:this.selectInfo});
     }
@@ -197,12 +202,12 @@ export default class ArticleTree extends Component {
         });
     }
 
-    openArticle() {
-        let selectInfo = this.selectInfo;
-        if (selectInfo.type === 'A') {
-            this.props.onSelectArticle(selectInfo.id);
-        }
-    }
+    //openArticle() {
+    //    let selectInfo = this.selectInfo;
+    //    if (selectInfo.type === 'A') {
+    //        this.props.onSelectArticle(selectInfo.id);
+    //    }
+    //}
 
     doRefresh() {
         this.fetchData();

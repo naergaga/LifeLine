@@ -47,9 +47,6 @@ export default class ToolBar extends Component {
                     target="_blank"
                     className={"btn btn-light" + (!isCategory ? " disabled" : "")} title="添加文章">
                     <i className="fa fa-plus fa-fw"></i></a>
-                <button className="btn btn-light" title="打开文章"
-                    onClick={this.props.openArticle}
-                    disabled={!isArticle}><i className="fa fa-file-text-o fa-fw"></i></button>
                 <button className="btn btn-light" title="刷新"
                     disabled={this.state.isLoad}
                     onClick={this.props.doRefresh}><i
@@ -75,3 +72,9 @@ export default class ToolBar extends Component {
         }
     }
 }
+
+/*
+<button className="btn btn-light" title="打开文章"
+                    onClick={this.props.openArticle}
+                    disabled={!isArticle}><i className="fa fa-file-text-o fa-fw"></i></button>
+*/

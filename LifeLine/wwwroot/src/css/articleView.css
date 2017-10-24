@@ -1,6 +1,5 @@
 ﻿.article-time > div {
     display: flex;
-    font-size:smaller;
 }
 
     .article-time > div > span:nth-child(1) {

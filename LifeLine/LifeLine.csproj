@@ -4,6 +4,15 @@
     <UserSecretsId>aspnet-LifeLine-4890C906-69C8-4D4A-9E0F-14C9E959154F</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="wwwroot\images\ups\**" />
+    <Content Remove="wwwroot\images\ups\**" />
+    <EmbeddedResource Remove="wwwroot\images\ups\**" />
+    <None Remove="wwwroot\images\ups\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="npm-debug.log" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />

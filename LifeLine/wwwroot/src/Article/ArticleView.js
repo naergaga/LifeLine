@@ -2,6 +2,7 @@
 import * as axios from 'axios';
 import * as prism from 'prismjs';
 import { DateUtil } from '../Common/DateUtil';
+import ArticleInfos, { ArticleInfo } from './ArticleInfo';
 import 'prismjs/themes/prism.css';
 import '../css/articleView.css';
 
@@ -13,6 +14,8 @@ export default class ArticleTree extends Component {
         this.urls = {
             articleUrl: "/api/Article"
         }
+
+        this.infos = new ArticleInfos();
 
         this.state = {
             article: null
@@ -26,7 +29,7 @@ export default class ArticleTree extends Component {
         }
 
         return <div>
-            <h1>{article.title}</h1>
+            <h3>{article.title}</h3>
             <div dangerouslySetInnerHTML={{ __html: article.content }}></div>
             <div className="d-flex mt-5">
                 <div className="article-time ml-auto">
@@ -38,9 +41,16 @@ export default class ArticleTree extends Component {
     }
 
     openArticle(id) {
-        axios.get(this.urls.articleUrl + "/" + id)
+        let url = this.urls.articleUrl + "/" + id;
+        let info = this.infos.tryGet(url);
+        if (info !== undefined) {
+            this.setState({ article: info.data });
+            return;
+        }
+        axios.get(url)
             .then((response) => {
                 if (response.data) {
+                    this.infos.add(new ArticleInfo(response.data, url));
                     this.setState({ article: response.data });
                 }
             });

@@ -48,6 +48,7 @@ namespace LifeLine.Data
         public DbSet<SongCollectionMap> SongCollectionMap { get; set; }
         public DbSet<Article> Article { get; set; }
         public DbSet<ArticleCategory> ArticleCategory { get; set; }
+        public DbSet<UpImage> UpImage { get; set; }
 
         public void DeleteArticleCategory(ArticleCategory entity)
         {

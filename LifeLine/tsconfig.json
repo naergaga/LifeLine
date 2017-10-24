@@ -1,13 +1,16 @@
 {
-    "compilerOptions": {
-        "allowJs": true,            // These settings apply to .js files as well as .ts files
-        "noEmit":  true             // Do not compile the JS (or TS) files in this project on build
-    },
+  "compileOnSave": false,
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "allowJs": true, // These settings apply to .js files as well as .ts files
+    "noEmit": true // Do not compile the JS (or TS) files in this project on build
+  },
   "exclude": [
     "node_modules", // Don't include any JavaScript found under "node_modules" or "bower_components"
     "bower_components",
     "bin/Release/PublishOutput",
     "obj/Release/netcoreapp2.0/PubTmp/Out/wwwroot/lib",
+    "obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib",
     "wwwroot/lib"
   ]
 }

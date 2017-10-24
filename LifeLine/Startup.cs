@@ -60,6 +60,7 @@ namespace LifeLine
             // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddTransient<SongService>();
+            services.AddTransient<ImageService>();
             services.AddTransient<ArticleService>();
             services.AddTransient<CategoryViewProvider>();
         }
