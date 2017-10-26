@@ -13,9 +13,10 @@ export default class TopToolBar extends Component {
         return <div>
             <div className="btn-group w-100">
                 <button className="btn btn-light"
+                    onClick={this.props.backToRoot}
                 ><i className="fa fa-home fa-fw"></i> 回到根目录</button>
                 <button className="btn btn-light"
-                    onClick={this.props.toggleShowTree}
+                    onClick={this.props.hideTree}
                 ><i className="fa fa-cube fa-fw"></i> 折叠</button>
             </div>
         </div>;

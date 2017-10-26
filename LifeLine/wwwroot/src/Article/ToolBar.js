@@ -68,8 +68,13 @@ export default class ToolBar extends Component {
         if (info.type === "C") {
             this.props.doEdit();
         } else {
+            this.props.onArticleEdit(info.id);
             window.open("/Article/Edit/" + info.id, "_blank");
         }
+    }
+
+    switchToRoot() {
+        this.setState({ selectInfo: null });
     }
 }
 

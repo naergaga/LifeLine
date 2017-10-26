@@ -11,7 +11,7 @@ class Article extends Component {
 
         this.onSelectArticle = this.onSelectArticle.bind(this);
         this.openDialog = this.openDialog.bind(this);
-        this.toggleShowTree = this.toggleShowTree.bind(this);
+        this.toggleShowTree = this.hideTree.bind(this);
         this.showTree = this.showTree.bind(this);
     }
 
@@ -22,9 +22,10 @@ class Article extends Component {
                 <div className={visible?"col-md-3 p-0 tree-wrap":"d-none"}>
                     <ArticleTree
                         ref={item => this.tree = item}
-                        toggleShowTree={this.toggleShowTree}//TODO:change to hidden
+                        hideTree={this.hideTree}
                         openDialog={this.openDialog}
                         onSelectArticle={this.onSelectArticle}
+                        onArticleEdit={this.onArticleEdit}
                     />
                 </div>
                 <div className={visible ? "col-md-9" : ""}>
@@ -48,13 +49,19 @@ class Article extends Component {
         this.articleView.openArticle(id);
     }
 
+    onArticleEdit(id) {
+        if (this.articleView){
+            this.articleView.removeArticleCache(id);
+        }
+    }
+
     openDialog(type, id, name) {
         if (this.dialog) {
             this.dialog.handleOpenModal(type, id, name);
         }
     }
 
-    toggleShowTree() {
+    hideTree() {
         this.setState({ treeVisible: false });
     }
 

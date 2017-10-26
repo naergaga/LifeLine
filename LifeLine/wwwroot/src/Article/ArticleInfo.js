@@ -28,14 +28,16 @@ export default class ArticleInfos {
         return info;
     }
 
-    onEdit(url) {
+    TryRemove(url) {
         for (let i = 0; i < this.infos.length; i++) {
             let item = this.infos[i];
             if (item.url === url) {
-                this.infos.splice(i, 1);
-                return false;
+                let result = this.infos.splice(i, 1);
+                console.log("do clear", result);
+                return true;
             }
         }
+        return false;
     }
 }
 

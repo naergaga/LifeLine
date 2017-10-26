@@ -9,8 +9,10 @@
     "node_modules", // Don't include any JavaScript found under "node_modules" or "bower_components"
     "bower_components",
     "bin/Release/PublishOutput",
+    "bin/Debug/PublishOutput",
     "obj/Release/netcoreapp2.0/PubTmp/Out/wwwroot/lib",
     "obj/Debug/netcoreapp2.0/PubTmp/Out/wwwroot/lib",
+    "bin/Debug/netcoreapp2.0/publish/wwwroot/lib",
     "wwwroot/lib"
   ]
 }

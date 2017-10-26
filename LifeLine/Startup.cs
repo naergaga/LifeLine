@@ -62,6 +62,7 @@ namespace LifeLine
             services.AddTransient<SongService>();
             services.AddTransient<ImageService>();
             services.AddTransient<ArticleService>();
+            services.AddTransient<CategoryService>();
             services.AddTransient<CategoryViewProvider>();
         }
 

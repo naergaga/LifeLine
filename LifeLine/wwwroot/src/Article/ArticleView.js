@@ -20,6 +20,9 @@ export default class ArticleTree extends Component {
         this.state = {
             article: null
         };
+
+        this.getArticleUrl = this.getArticleUrl.bind(this);
+        this.removeArticleCache = this.removeArticleCache.bind(this);
     }
 
     render() {
@@ -41,7 +44,7 @@ export default class ArticleTree extends Component {
     }
 
     openArticle(id) {
-        let url = this.urls.articleUrl + "/" + id;
+        let url = this.getArticleUrl(id);
         let info = this.infos.tryGet(url);
         if (info !== undefined) {
             this.setState({ article: info.data });
@@ -54,6 +57,15 @@ export default class ArticleTree extends Component {
                     this.setState({ article: response.data });
                 }
             });
+    }
+
+    removeArticleCache(id) {
+        let url = this.getArticleUrl(id);
+        console.log(this.infos.TryRemove(url));
+    }
+
+    getArticleUrl(id) {
+        return this.urls.articleUrl + "/" + id;
     }
 
     componentDidUpdate() {

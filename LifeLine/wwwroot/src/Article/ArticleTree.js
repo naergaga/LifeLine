@@ -6,7 +6,7 @@ import 'rc-tree/assets/index.css';
 import '../css/articleTree.css';
 import ToolBar from "./ToolBar";
 import TopToolBar from "./TopToolBar";
-import {AxiosForm} from '../Common/AxiosInstance';
+import { AxiosForm } from '../Common/AxiosInstance';
 
 export default class ArticleTree extends Component {
 
@@ -16,7 +16,7 @@ export default class ArticleTree extends Component {
         this.urls = {
             dataUrl: "/api/Article",
             articleAddUrl: "/Article/Add",
-            articleMoveUrl: "api/Category/Move",
+            moveUrl: "api/Category/Move",
             removeCategoryUrl: "/api/Category",
             removeArticleUrl: "/api/Article"
         }
@@ -35,6 +35,7 @@ export default class ArticleTree extends Component {
         this.onDrop = this.onDrop.bind(this);
         this.addFolder = this.addFolder.bind(this);
         this.editFolder = this.editFolder.bind(this);
+        this.backToRoot = this.backToRoot.bind(this);
     }
 
     render() {
@@ -63,13 +64,14 @@ export default class ArticleTree extends Component {
         //呈现文章
         const renderArticles = articles => {
             return articles.map((article) => {
-                return (<TreeNode key={"A" + article.id} title={article.title}/>)
+                return (<TreeNode key={"A" + article.id} title={article.title} />)
             });
         };
 
         return <div className="tree-nav">
             <TopToolBar
-                toggleShowTree={this.props.toggleShowTree}
+                backToRoot={this.backToRoot}
+                hideTree={this.props.hideTree}
             />
             <Tree
                 defaultExpandAll={true}
@@ -81,11 +83,12 @@ export default class ArticleTree extends Component {
                 {loopCate(this.state.treeData)}
             </Tree>
             <ToolBar
-                ref={item=>this.toolBar=item}
+                ref={item => this.toolBar = item}
                 doRefresh={this.doRefresh}
                 doEdit={this.editFolder}
                 openArticle={this.openArticle}
                 removeSelect={this.removeSelect}
+                onArticleEdit={this.props.onArticleEdit}
                 doAdd={this.addFolder}
                 articleAddUrl={this.urls.articleAddUrl}
             />
@@ -98,12 +101,12 @@ export default class ArticleTree extends Component {
             this.props.openDialog("add");
             return;
         }
-        this.props.openDialog("add",info.id,info.title);
+        this.props.openDialog("add", info.id, info.title);
     }
 
     editFolder() {
         let info = this.selectInfo;
-        this.props.openDialog("edit",info.id, info.title);
+        this.props.openDialog("edit", info.id, info.title);
     }
 
     onDragStart(info) {
@@ -115,15 +118,46 @@ export default class ArticleTree extends Component {
     }
 
     onDrop(info) {
-        if (info.dropToGap) return;
         const dropId = info.node.props.eventKey.substring(1);
         const dropType = info.node.props.eventKey.substring(0, 1);
         const dragId = info.dragNode.props.eventKey.substring(1);
         const dragType = info.dragNode.props.eventKey.substring(0, 1);
-        this.axiosIns.post(this.urls.articleMoveUrl,{
-            categoryId:dropId,
-            articleId:dragId
-        }).then((response)=>{
+
+        if (info.dropToGap) {
+            if (dropType !== "C") {
+                return;
+            }
+            const loop = (cate, id, callback) => {
+                cate.subCategories.forEach((item, index, arr) => {
+                    if (item.id === id) {
+                        callback(cate.category);
+                    }
+                });
+            }
+
+            console.log("hello");
+            let subs = this.state.treeData.subCategories;
+            for (var i = 0; i < subs.length; i++) {
+                let item = subs[i];
+                let cateItem;
+                loop(subs, dropId, cate => {
+                    cateItem = cate;
+                    console.log(cate);
+                });
+                if (cateItem !== undefined){
+                    console.log(cateItem);
+                    return;
+                }
+            }
+
+            console.log(info.node);
+        }
+        this.axiosIns.post(this.urls.moveUrl, {
+            dropId: dropId,
+            dragId: dragId,
+            dropIsCategory: dropType === "C",
+            dragIsCategory: dragType === "C"
+        }).then((response) => {
             console.log("drop over");
             this.fetchData();
         });
@@ -139,7 +173,7 @@ export default class ArticleTree extends Component {
         const loop = (data, key, type, callback) => {
             if (type === "C") {
                 data.subCategories.forEach((item, index, arr) => {
-                    if (item.category.id == key) {
+                    if (item.category.id === key) {
                         return callback(item, index, arr);
                     }
                 });
@@ -172,7 +206,7 @@ export default class ArticleTree extends Component {
                 item.articles.push(dragObj);
             }
         });
-        
+
         this.setState({
             visible: true,
             treeData: data,
@@ -191,8 +225,8 @@ export default class ArticleTree extends Component {
             this.props.onSelectArticle(this.selectInfo.id);
         }
         //设置toolBar状态
-        if(this.toolBar)
-            this.toolBar.setState({selectInfo:this.selectInfo});
+        if (this.toolBar)
+            this.toolBar.setState({ selectInfo: this.selectInfo });
     }
 
     removeSelect() {
@@ -224,9 +258,19 @@ export default class ArticleTree extends Component {
             this.setState({
                 treeData: response.data
             });
-            if(this.toolBar)
-                this.toolBar.setState({isLoad:false});
+            if (this.toolBar)
+                this.toolBar.setState({ isLoad: false });
         });
+    }
+
+    backToRoot() {
+        if (this.toolBar) {
+            //Warning:query dom
+            let selectNode = document.querySelector(".rc-tree-node-selected");
+            selectNode.className = selectNode.className.replace(" rc-tree-node-selected", "");
+
+            this.toolBar.switchToRoot();
+        }
     }
 
 }

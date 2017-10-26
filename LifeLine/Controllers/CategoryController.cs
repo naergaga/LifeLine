@@ -7,8 +7,10 @@ using LifeLine.Services.Providers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using LifeLine.Data;
+using LifeLine.Services;
 using LifeLine.Models.View;
 using LifeLine.Models;
+using LifeLine.Models.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -44,8 +46,8 @@ namespace LifeLine.Controllers
         // POST api/values
         [HttpPost]
         public IActionResult Post(
-            [FromServices]UserManager<ApplicationUser> userManager, 
-            [FromServices]ApplicationDbContext context, 
+            [FromServices]UserManager<ApplicationUser> userManager,
+            [FromServices]ApplicationDbContext context,
             int? parentId, string name)
         {
             var userId = userManager.GetUserId(User);
@@ -62,22 +64,27 @@ namespace LifeLine.Controllers
         [HttpPost("Move")]
         public IActionResult Move(
             [FromServices]UserManager<ApplicationUser> userManager,
-            [FromServices]ApplicationDbContext context,
-            int categoryId, int articleId)
+            [FromServices]CategoryService service,
+            int? dropId, int dragId, bool dropIsCategory, bool dragIsCategory)
         {
+            var result = new BaseSuccessResult { Success = false };
+
             var userId = userManager.GetUserId(User);
-            var article = context.Article.SingleOrDefault(t => t.Id == articleId);
-            article.CategoryId = categoryId;
-            context.Update(article);
-            context.SaveChanges();
-            return Json(article);
+            if (!dropIsCategory) return Json(result);
+            if (dragIsCategory)
+            {
+                result.Success = service.MoveCategoryToCategory(dragId, dropId, userId);
+                return Json(result);
+            }
+            result.Success = service.MoveArticleToCategory(dragId, dropId, userId);
+            return Json(result);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public IActionResult Put(
             [FromServices]ApplicationDbContext context,
-            [FromServices]UserManager<ApplicationUser> userManager, 
+            [FromServices]UserManager<ApplicationUser> userManager,
             int id, string name)
         {
             var userId = userManager.GetUserId(User);
@@ -104,7 +111,8 @@ namespace LifeLine.Controllers
             {
                 context.DeleteArticleCategory(item);
                 return NoContent();
-            } else
+            }
+            else
             {
                 return BadRequest(new { message = "Permission denied" });
             }
