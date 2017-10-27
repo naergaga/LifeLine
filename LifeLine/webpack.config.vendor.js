@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const bundleOutputDir = './wwwroot/dist';
 
 module.exports = (env) => {
     const extractCSS = new ExtractTextPlugin('vendor.css');
@@ -8,7 +9,7 @@ module.exports = (env) => {
     return [{
         stats: { modules: false },
         resolve: {
-            extensions: ['.js']
+            extensions: ['.js'],
         },
         module: {
             rules: [
@@ -17,7 +18,7 @@ module.exports = (env) => {
             ]
         },
         entry: {
-            vendor: ['bootstrap', 'bootstrap/dist/css/bootstrap.css','font-awesome/css/font-awesome.css', 'react', 'react-dom','jquery', 'popper.js'],
+            vendor: ['bootstrap/dist/css/bootstrap.css', 'font-awesome/css/font-awesome.css', 'react', 'react-dom', 'jquery', 'popper.js'],
         },
         output: {
             path: path.join(__dirname, 'wwwroot', 'dist'),
@@ -28,7 +29,7 @@ module.exports = (env) => {
         plugins: [
             extractCSS,
             new webpack.ProvidePlugin({ $: 'jquery', jQuery: 'jquery' }), // Maps these identifiers to the jQuery package (because Bootstrap expects it to be a global variable)
-            new webpack.ProvidePlugin({ Popper: 'popper.js' }),
+            //new webpack.ProvidePlugin({ Popper: 'popper.js' }),
             new webpack.DllPlugin({
                 path: path.join(__dirname, 'wwwroot', 'dist', '[name]-manifest.json'),
                 name: '[name]_[hash]'
@@ -36,8 +37,13 @@ module.exports = (env) => {
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': isDevBuild ? '"development"' : '"production"'
             })
-        ].concat(isDevBuild ? [] : [
-            new webpack.optimize.UglifyJsPlugin()
-        ])
+        ].concat(isDevBuild ? [
+            new webpack.SourceMapDevToolPlugin({
+                filename: '[file].map',
+                moduleFilenameTemplate: path.relative(bundleOutputDir, '[resourcePath]') // Point sourcemap entries to the original file locations on disk
+            })
+        ] : [
+                new webpack.optimize.UglifyJsPlugin()
+            ])
     }];
 };

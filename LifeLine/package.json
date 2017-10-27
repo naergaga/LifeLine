@@ -8,7 +8,7 @@
     "dotnet-build": "dotnet build",
     "watch": "webpack --watch",
     "build": "webpack -p",
-    "build vendor": "webpack --config webpack.vendor.js -p"
+    "build vendor": "webpack --config webpack.config.vendor.js -p"
   },
   "author": "naergaga",
   "license": "ISC",

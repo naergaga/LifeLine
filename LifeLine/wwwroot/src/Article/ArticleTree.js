@@ -97,7 +97,7 @@ export default class ArticleTree extends Component {
 
     addFolder() {
         let info = this.selectInfo;
-        if (info === undefined) {
+        if (info === undefined || info===null) {
             this.props.openDialog("add");
             return;
         }
@@ -118,7 +118,7 @@ export default class ArticleTree extends Component {
     }
 
     onDrop(info) {
-        const dropId = info.node.props.eventKey.substring(1);
+        let dropId = info.node.props.eventKey.substring(1);
         const dropType = info.node.props.eventKey.substring(0, 1);
         const dragId = info.dragNode.props.eventKey.substring(1);
         const dragType = info.dragNode.props.eventKey.substring(0, 1);
@@ -129,29 +129,43 @@ export default class ArticleTree extends Component {
             }
             const loop = (cate, id, callback) => {
                 cate.subCategories.forEach((item, index, arr) => {
-                    if (item.id === id) {
-                        callback(cate.category);
+                    console.log(item.category.id, id, item.id === id);
+                    if (item.category.id === id) {
+                        console.log("hehe", item);
+                        callback(cate);
+                        return false;
                     }
+                    loop(item, id, callback);
                 });
             }
 
-            console.log("hello");
             let subs = this.state.treeData.subCategories;
-            for (var i = 0; i < subs.length; i++) {
+            let childId = Number(dropId);
+            let parentId;
+
+            const callback = cate => {
+                parentId = cate === null ?null:cate.category.id;
+            };
+
+            //循环根目录下的目录
+            for (let i = 0; i < subs.length; i++) {
                 let item = subs[i];
-                let cateItem;
-                loop(subs, dropId, cate => {
-                    cateItem = cate;
-                    console.log(cate);
-                });
-                if (cateItem !== undefined){
-                    console.log(cateItem);
-                    return;
+                //如果在根目录下
+                if (item.category.id === childId) {
+                    callback(null);
+                } else {
+                    //遍历子目录
+                    loop(item, childId, callback);
+                }
+                if (parentId !== undefined) {
+                    break;
                 }
             }
 
-            console.log(info.node);
+            if (parentId === undefined) { console.log("unexpeact error!!!"); return; }
+            dropId = parentId;
         }
+        console.log(dropId, dragId);
         this.axiosIns.post(this.urls.moveUrl, {
             dropId: dropId,
             dragId: dragId,
@@ -267,8 +281,10 @@ export default class ArticleTree extends Component {
         if (this.toolBar) {
             //Warning:query dom
             let selectNode = document.querySelector(".rc-tree-node-selected");
+            if (!selectNode) { return; }
             selectNode.className = selectNode.className.replace(" rc-tree-node-selected", "");
 
+            this.selectInfo = null;
             this.toolBar.switchToRoot();
         }
     }

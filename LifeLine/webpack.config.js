@@ -7,7 +7,8 @@ module.exports = (env) => {
     const isDevBuild = !(env && env.prod);
     return [{
         entry: {
-            music: './wwwroot/src/MusicIndex.js',
+            //music: './wwwroot/src/MusicIndex.js',
+            site: './wwwroot/src/Site.js',
             article: './wwwroot/src/ArticleIndex.js',
         },
         module: {

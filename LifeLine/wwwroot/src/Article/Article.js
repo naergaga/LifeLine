@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import ArticleTree from './Article/ArticleTree';
-import ArticleView from './Article/ArticleView';
-import { AddDialog } from './Article/AddDialog';
+import ArticleTree from './ArticleTree';
+import ArticleView from './ArticleView';
+import { AddDialog } from './AddDialog';
 
 class Article extends Component {
     constructor() {
@@ -11,7 +11,7 @@ class Article extends Component {
 
         this.onSelectArticle = this.onSelectArticle.bind(this);
         this.openDialog = this.openDialog.bind(this);
-        this.toggleShowTree = this.hideTree.bind(this);
+        this.hideTree = this.hideTree.bind(this);
         this.showTree = this.showTree.bind(this);
     }
 
